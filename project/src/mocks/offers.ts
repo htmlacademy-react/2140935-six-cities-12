@@ -1,0 +1,73 @@
+import {Offers} from '../types/offer';
+const AVATAR_URL = 'https://i.pravatar.cc/128';
+
+export const offers: Offers = [
+  {
+    id: 0,
+    title: 'Canal View Apartment',
+    description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
+    images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-01.jpg'],
+    rate: '4.8',
+    isPremium: false,
+    type: 'Apartment',
+    inside: ['Wi-Fi', 'Heating', 'Kitchen', 'Fridge', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Towels', 'Baby seat', 'Cabel TV'],
+    bedrooms: 3,
+    adults: 4,
+    price: 120,
+    host: 'Angelina',
+    avatar: `${AVATAR_URL}?rnd=${Math.random()}`,
+    isPro: true,
+    reviewId: [0, 1]
+  },
+  {
+    id: 1,
+    title: 'Canal View Apartment',
+    description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
+    images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-01.jpg'],
+    rate: '4.8',
+    isPremium: true,
+    type: 'Apartment',
+    inside: ['Wi-Fi', 'Heating', 'Kitchen', 'Fridge', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Towels', 'Baby seat', 'Cabel TV'],
+    bedrooms: 3,
+    adults: 4,
+    price: 120,
+    host: 'Angelina',
+    avatar: `${AVATAR_URL}?rnd=${Math.random()}`,
+    isPro: false,
+    reviewId: [2]
+  },
+  {
+    id: 2,
+    title: 'Canal View Apartment',
+    description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
+    images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-01.jpg'],
+    rate: '4.8',
+    isPremium: false,
+    type: 'Apartment',
+    inside: ['Wi-Fi', 'Heating', 'Kitchen', 'Fridge', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Towels', 'Baby seat', 'Cabel TV'],
+    bedrooms: 3,
+    adults: 4,
+    price: 120,
+    host: 'Angelina',
+    avatar: `${AVATAR_URL}?rnd=${Math.random()}`,
+    isPro: true,
+    reviewId: [3, 4]
+  },
+  {
+    id: 3,
+    title: 'Canal View Apartment',
+    description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
+    images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-01.jpg'],
+    rate: '4.8',
+    isPremium: false,
+    type: 'Apartment',
+    inside: ['Wi-Fi', 'Heating', 'Kitchen', 'Fridge', 'Washing machine', 'Coffee machine', 'Dishwasher', 'Towels', 'Baby seat', 'Cabel TV'],
+    bedrooms: 3,
+    adults: 4,
+    price: 120,
+    host: 'Angelina',
+    avatar: `${AVATAR_URL}?rnd=${Math.random()}`,
+    isPro: false,
+    reviewId: []
+  },
+];

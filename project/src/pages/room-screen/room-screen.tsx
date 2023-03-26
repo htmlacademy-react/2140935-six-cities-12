@@ -1,8 +1,20 @@
+import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
+import {Offers} from '../../types/offer';
 
-function RoomScreen(): JSX.Element {
+type RoomScreenProps = {
+  offer: Offers;
+};
+
+function RoomScreen(props: RoomScreenProps): JSX.Element {
+  const {offer} = props;
+  const {title} = offer;
+
   return (
     <div className="page">
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <Header />
 
       <main className="page__main page__main--property">
@@ -36,7 +48,7 @@ function RoomScreen(): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
