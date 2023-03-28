@@ -1,4 +1,4 @@
-type GenreOffers = {
+export type GenreOffers = {
   id: number;
   title: string;
   description: string;
@@ -13,10 +13,12 @@ type GenreOffers = {
   host: string;
   avatar: string;
   isPro: boolean;
-  reviewId: number[];
+  reviewIds: number[];
+  isFavorites: boolean;
+  city: string;
 };
 
-type GenreReviews = {
+export type GenreReviews = {
   id: number;
   nickname: string;
   avatar: string;

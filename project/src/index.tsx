@@ -5,8 +5,8 @@ import {offers} from './mocks/offers';
 import {reviews} from './mocks/reviews';
 
 const Setting = {
-  HotelCount: 3,
-} as const;
+  Cities: ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'],
+};
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -15,9 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      hotelCount = {Setting.HotelCount}
       offers = {offers}
       reviews = {reviews}
+      cities = {Setting.Cities}
     />
   </React.StrictMode>,
 );

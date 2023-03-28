@@ -7,24 +7,36 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Offers, Reviews} from '../../types/offer';
+import {Offers} from '../../types/offer';
+import {Reviews} from '../../types/offer';
+import {useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
 
-type AppScreenProps = {
-  hotelCount: number;
-  offers: Offers;
-  reviews: Reviews;
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
 }
 
-function App({hotelCount, offers, reviews}: AppScreenProps): JSX.Element {
-  const [firstOffer] = offers;
+type AppScreenProps = {
+  offers: Offers;
+  reviews: Reviews;
+  cities: string[];
+}
 
+function App({offers, reviews, cities}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainScreen hotelCount={hotelCount} />}
+            element={<MainScreen offers={offers}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -34,18 +46,16 @@ function App({hotelCount, offers, reviews}: AppScreenProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesScreen />
+                <FavoritesScreen offers={offers} cities={cities} />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Room}
             element={
-              <RoomScreen
-                offer={firstOffer}
-              />
+              <RoomScreen offers={offers} reviews={reviews}/>
             }
           />
           <Route
