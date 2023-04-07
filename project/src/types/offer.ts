@@ -1,5 +1,5 @@
-export type GenreOffers = {
-  id: number;
+export type Offer = {
+  id: string;
   title: string;
   description: string;
   images: string[];
@@ -18,7 +18,7 @@ export type GenreOffers = {
   city: string;
 };
 
-export type GenreReviews = {
+export type Review = {
   id: number;
   nickname: string;
   avatar: string;
@@ -26,6 +26,3 @@ export type GenreReviews = {
   rate: number;
   text: string;
 };
-
-export type Offers = GenreOffers[];
-export type Reviews = GenreReviews[];

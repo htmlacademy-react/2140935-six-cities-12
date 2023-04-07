@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './components/app/app';
+
 import {offers} from './mocks/offers';
 import {reviews} from './mocks/reviews';
+import App from './components/app/app';
 
 const Setting = {
   Cities: ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'],

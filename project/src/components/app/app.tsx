@@ -1,5 +1,8 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
+
+import {Offer} from '../../types/offer';
+import {Review} from '../../types/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -7,24 +10,11 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import {Offers} from '../../types/offer';
-import {Reviews} from '../../types/offer';
-import {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
-
-function ScrollToTop() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-}
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 type AppScreenProps = {
-  offers: Offers;
-  reviews: Reviews;
+  offers: Offer[];
+  reviews: Review[];
   cities: string[];
 }
 

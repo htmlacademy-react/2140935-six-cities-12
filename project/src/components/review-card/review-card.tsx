@@ -1,17 +1,18 @@
-import {Reviews} from '../../types/offer';
+import {Review} from '../../types/offer';
+import {RATIO} from '../../const';
 
 type ReviewProps = {
-  reviews: Reviews;
+  reviews: Review[];
   reviewId: number;
 };
 
-function Review({reviews, reviewId}: ReviewProps): JSX.Element {
+function ReviewCard({reviews, reviewId}: ReviewProps): JSX.Element {
   const review = reviews.find((item) => item.id === reviewId);
   if (!review) {
     return <>Not found</>;
   }
   const {nickname, avatar, date, rate, text} = review;
-  const ratePercent = rate * 20;
+  const ratePercent = rate * RATIO;
 
   return (
     <li className="reviews__item">
@@ -39,4 +40,4 @@ function Review({reviews, reviewId}: ReviewProps): JSX.Element {
   );
 }
 
-export default Review;
+export default ReviewCard;

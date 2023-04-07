@@ -1,11 +1,12 @@
+import {Offer} from '../../types/offer';
 import Card from '../card/card';
-import {Offers} from '../../types/offer';
 
-type CardsListProps = {
-  offers: Offers;
+type CardsListMainProps = {
+  offers: Offer[];
 }
 
-function CardsList({offers}: CardsListProps): JSX.Element {
+function CardsListMain({offers}: CardsListMainProps): JSX.Element {
+  const cardType = 'main';
   const hotelCount = offers.length;
 
   return (
@@ -27,13 +28,13 @@ function CardsList({offers}: CardsListProps): JSX.Element {
           <li className="places__option" tabIndex={0}>Top rated first</li>
         </ul>
       </form>
-      <div className="cities__places-list places__list tabs__content">
+      <div className="cities__places-list places__list tabs__content" >
         {offers.map((item) => (
-          <Card key={item.id} offer={item} />
+          <Card key={item.id} offer={item} cardType={cardType} />
         ))}
       </div>
     </section>
   );
 }
 
-export default CardsList;
+export default CardsListMain;

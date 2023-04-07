@@ -1,7 +1,7 @@
-import {Reviews} from '../types/offer';
+import {Review} from '../types/offer';
 const AVATAR_URL = 'https://i.pravatar.cc/128';
 
-export const reviews: Reviews = [
+export const reviews: Review[] = [
   {
     id: 0,
     nickname: 'Kasya',

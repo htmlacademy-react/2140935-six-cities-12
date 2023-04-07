@@ -1,10 +1,10 @@
 import {Helmet} from 'react-helmet-async';
+import {Offer} from '../../types/offer';
 import Header from '../../components/header/header';
-import CardsList from '../../components/cards-list/cards-list';
-import {Offers} from '../../types/offer';
+import CardsListMain from '../../components/cards-list/cards-list-main';
 
 type MainScreenProps = {
-  offers: Offers;
+  offers: Offer[];
 }
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
@@ -55,7 +55,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <CardsList offers={offers} />
+            <CardsListMain offers={offers} />
             <div className="cities__right-section">
               <section className="cities__map map"></section>
             </div>

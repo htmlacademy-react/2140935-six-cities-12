@@ -1,25 +1,27 @@
 import {useParams} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
+
+import {Offer} from '../../types/offer';
+import {Review} from '../../types/offer';
 import Header from '../../components/header/header';
-import {Offers} from '../../types/offer';
-import {Reviews} from '../../types/offer';
-import CardNear from '../../components/card/card-near';
-import Review from '../../components/review/review';
+import CardsListNear from '../../components/cards-list/cards-list-near';
+import ReviewCard from '../../components/review-card/review-card';
 import Form from '../../components/form/form';
+import {RATIO} from '../../const';
 
 type RoomScreenProps = {
-  offers: Offers;
-  reviews: Reviews;
+  offers: Offer[];
+  reviews: Review[];
 };
 
 function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
   const params = useParams();
-  const offer = offers.find((room) => room.id === Number(params.id));
+  const offer = offers.find((room) => room.id === params.id);
   if (!offer) {
     return <>Not found</>;
   }
   const {title, description, images, rate, isPremium, type, inside, bedrooms, adults, price, host, avatar, isPro, city, reviewIds, isFavorites} = offer;
-  const ratePercent = parseFloat(rate) * 20;
+  const ratePercent = parseFloat(rate) * RATIO;
 
   return (
     <div className="page">
@@ -108,7 +110,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
                 <ul className="reviews__list">
                   {reviewIds.map((item) => (
-                    <Review key={item} reviews={reviews} reviewId={item} />
+                    <ReviewCard key={item} reviews={reviews} reviewId={item} />
                   ))}
                 </ul>
 
@@ -120,14 +122,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
           <section className="property__map map"></section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {offers.map((item) => (
-                item.city === city && <CardNear key={item.id} offer={item} />
-              ))}
-            </div>
-          </section>
+          <CardsListNear offers={offers} />
         </div>
       </main>
     </div>
