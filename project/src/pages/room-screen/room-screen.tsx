@@ -16,7 +16,7 @@ type RoomScreenProps = {
 
 function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
   const params = useParams();
-  const offer = offers.find((room) => room.id === params.id);
+  const offer = offers.find((room) => room.id.toString() === params.id);
   if (!offer) {
     return <>Not found</>;
   }

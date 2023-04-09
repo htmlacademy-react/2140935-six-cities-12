@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Offer} from '../../types/offer';
 import Card from '../card/card';
 import {Link} from 'react-router-dom';
@@ -9,6 +10,9 @@ type CardListFavoriteProps = {
 
 function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element {
   const cardType = 'favorite';
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const onMouseOver = (id: number) => setActiveCardId(id);
+  const onMouseLeave = () => setActiveCardId(null);
 
   return (
     <section className="favorites">
@@ -26,7 +30,15 @@ function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element
               </div>
               <div className="favorites__places">
                 {offers.map((item) => (
-                  item.isFavorites && item.city === city && <Card key={item.id} offer={item} cardType={cardType} />
+                  item.isFavorites && item.city === city &&
+                  <Card
+                    key={item.id}
+                    offer={item}
+                    cardType={cardType}
+                    isActive={activeCardId === item.id}
+                    onMouseOver={onMouseOver}
+                    onMouseLeave={onMouseLeave}
+                  />
                 ))}
               </div>
             </li>

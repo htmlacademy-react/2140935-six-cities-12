@@ -3,7 +3,7 @@ const AVATAR_URL = 'https://i.pravatar.cc/128';
 
 export const offers: Offer[] = [
   {
-    id: '0',
+    id: 0,
     title: 'Sunflower Suites',
     description: 'Description This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -22,7 +22,7 @@ export const offers: Offer[] = [
     city: 'Paris'
   },
   {
-    id: '1',
+    id: 1,
     title: 'Ocean Breeze Inn',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -41,7 +41,7 @@ export const offers: Offer[] = [
     city: 'Paris'
   },
   {
-    id: '2',
+    id: 2,
     title: 'Riverside Retreat',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -60,7 +60,7 @@ export const offers: Offer[] = [
     city: 'Paris'
   },
   {
-    id: '3',
+    id: 3,
     title: 'Serenity Lodge',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -79,7 +79,7 @@ export const offers: Offer[] = [
     city: 'Cologne'
   },
   {
-    id: '4',
+    id: 4,
     title: 'Mountain View Motel',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -98,7 +98,7 @@ export const offers: Offer[] = [
     city: 'Brussels'
   },
   {
-    id: '5',
+    id: 5,
     title: 'Sunset Haven',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -117,7 +117,7 @@ export const offers: Offer[] = [
     city: 'Amsterdam'
   },
   {
-    id: '6',
+    id: 6,
     title: 'Palm Grove Resort',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -136,7 +136,7 @@ export const offers: Offer[] = [
     city: 'Amsterdam'
   },
   {
-    id: '7',
+    id: 7,
     title: 'Rustic Inn',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -155,7 +155,7 @@ export const offers: Offer[] = [
     city: 'Amsterdam'
   },
   {
-    id: '8',
+    id: 8,
     title: 'Harbor View Hotel',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -174,7 +174,7 @@ export const offers: Offer[] = [
     city: 'Amsterdam'
   },
   {
-    id: '9',
+    id: 9,
     title: 'Bluebird Lodge',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],
@@ -192,7 +192,7 @@ export const offers: Offer[] = [
     isFavorites: true,
     city: 'Hamburg'
   }, {
-    id: '10',
+    id: 10,
     title: 'Lemoral Apart Otel',
     description: 'This apartment is located in the heart of Amsterdam and offers stunning views of the canals. It features a modern interior with a fully equipped kitchen, comfortable living area, and spacious bedrooms.',
     images: ['/img/room.jpg', '/img/apartment-01.jpg', '/img/apartment-02.jpg', '/img/apartment-03.jpg', '/img/studio-01.jpg', '/img/apartment-04.jpg'],

@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {RATIO} from '../../const';
@@ -7,23 +6,22 @@ import {AppRoute} from '../../const';
 type CardProps = {
   offer: Offer;
   cardType: string;
+  isActive: boolean;
+  onMouseOver: (id: number) => void;
+  onMouseLeave: () => void;
 };
 
 function Card(props: CardProps): JSX.Element {
-  const {offer, cardType} = props;
+  const {offer, cardType, isActive, onMouseOver, onMouseLeave} = props;
   const {id, title, city, images, isPremium, type, price, rate} = offer;
   const ratePercent = parseFloat(rate) * RATIO;
-  const [isActive, setIsActive] = useState('');
-
-  const handleMouseEnter = () => {
-    setIsActive(id);
-  };
-  const handleMouseLeave = () => {
-    setIsActive('');
-  };
 
   return (
-    <article onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={`${cardType === 'main' ? 'cities__card' : ''} ${cardType === 'near' ? 'near-places__card' : ''} ${cardType === 'favorite' ? 'favorites__card' : ''} place-card`}>
+    <article
+      className={`${cardType === 'main' ? 'cities__card' : ''} ${cardType === 'near' ? 'near-places__card' : ''} ${cardType === 'favorite' ? 'favorites__card' : ''} place-card`}
+      onMouseOver={() => onMouseOver(offer.id)}
+      onMouseLeave={onMouseLeave}
+    >
       <div className={isPremium ? 'place-card__mark' : ''}>
         <span>{isPremium ? 'Premium' : null}</span>
       </div>

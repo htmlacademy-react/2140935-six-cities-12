@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Offer} from '../../types/offer';
 import Card from '../card/card';
 
@@ -8,6 +9,9 @@ type CardsListMainProps = {
 function CardsListMain({offers}: CardsListMainProps): JSX.Element {
   const cardType = 'main';
   const hotelCount = offers.length;
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const onMouseOver = (id: number) => setActiveCardId(id);
+  const onMouseLeave = () => setActiveCardId(null);
 
   return (
     <section className="cities__places places">
@@ -30,7 +34,14 @@ function CardsListMain({offers}: CardsListMainProps): JSX.Element {
       </form>
       <div className="cities__places-list places__list tabs__content" >
         {offers.map((item) => (
-          <Card key={item.id} offer={item} cardType={cardType} />
+          <Card
+            key={item.id}
+            offer={item}
+            cardType={cardType}
+            isActive={activeCardId === item.id}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
+          />
         ))}
       </div>
     </section>
