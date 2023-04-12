@@ -19,7 +19,9 @@ export const offers: Offer[] = [
     isPro: true,
     reviewIds: [0, 1, 7, 8, 9],
     isFavorites: true,
-    city: 'Paris'
+    city: 'Amsterdam',
+    lat: 52.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 1,
@@ -38,7 +40,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [2],
     isFavorites: false,
-    city: 'Paris'
+    city: 'Amsterdam',
+    lat: 52.3609553943508,
+    lng: 4.85309666406198
   },
   {
     id: 2,
@@ -57,7 +61,9 @@ export const offers: Offer[] = [
     isPro: true,
     reviewIds: [3, 4],
     isFavorites: false,
-    city: 'Paris'
+    city: 'Amsterdam',
+    lat: 52.3909553943508,
+    lng: 4.929309666406198
   },
   {
     id: 3,
@@ -76,7 +82,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [],
     isFavorites: true,
-    city: 'Cologne'
+    city: 'Amsterdam',
+    lat: 52.3809553943508,
+    lng: 4.939309666406198
   },
   {
     id: 4,
@@ -95,7 +103,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [5],
     isFavorites: true,
-    city: 'Brussels'
+    city: 'Brussels',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 5,
@@ -114,7 +124,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [6],
     isFavorites: false,
-    city: 'Amsterdam'
+    city: 'Paris',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 6,
@@ -133,7 +145,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [],
     isFavorites: true,
-    city: 'Amsterdam'
+    city: 'Paris',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 7,
@@ -152,7 +166,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [7],
     isFavorites: true,
-    city: 'Amsterdam'
+    city: 'Paris',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 8,
@@ -171,7 +187,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [8, 9],
     isFavorites: true,
-    city: 'Amsterdam'
+    city: 'Dusseldorf',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   },
   {
     id: 9,
@@ -190,7 +208,9 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [],
     isFavorites: true,
-    city: 'Hamburg'
+    city: 'Hamburg',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   }, {
     id: 10,
     title: 'Lemoral Apart Otel',
@@ -208,6 +228,8 @@ export const offers: Offer[] = [
     isPro: false,
     reviewIds: [9],
     isFavorites: true,
-    city: 'Dusseldorf'
+    city: 'Dusseldorf',
+    lat: 53.3909553943508,
+    lng: 4.85309666406198
   },
 ];

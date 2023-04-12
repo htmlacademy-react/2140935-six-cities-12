@@ -9,7 +9,6 @@ type CardListFavoriteProps = {
 }
 
 function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element {
-  const cardType = 'favorite';
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const onMouseOver = (id: number) => setActiveCardId(id);
   const onMouseLeave = () => setActiveCardId(null);
@@ -34,7 +33,7 @@ function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element
                   <Card
                     key={item.id}
                     offer={item}
-                    cardType={cardType}
+                    cardType={'favorite'}
                     isActive={activeCardId === item.id}
                     onMouseOver={onMouseOver}
                     onMouseLeave={onMouseLeave}

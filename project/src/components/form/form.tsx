@@ -11,22 +11,12 @@ function generateStars() {
 
 function Form(): JSX.Element {
   const placeholder = 'Tell how was your stay, what you like and what can be improved';
-  const [textarea, setTextarea] = useState('');
-  const [starValue, setStars] = useState('0');
   const starsValue = generateStars();
 
-  function handleChange(evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    switch (evt.target.name) {
-      case 'stars':
-        setStars(evt.target.value);
-        break;
-      case 'textarea':
-        setTextarea(evt.target.value);
-        break;
-      default:
-        break;
-    }
-  }
+  const [state, setState] = useState({ text: '', rate: 0 });
+  const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=> {
+    setState({ ...state, [evt.target.name]: evt.target.value});
+  };
 
   return (
     <form className="reviews__form form" action="/" method="post">
@@ -41,13 +31,12 @@ function Form(): JSX.Element {
               </svg>
             </label>
           </>
-        ))}{starValue}
+        ))}
       </div>
-      <textarea name="textarea" onChange={handleChange} value={textarea} className="reviews__textarea form__textarea" id="review" placeholder={placeholder}></textarea>
+      <textarea name="textarea" onChange={handleChange} className="reviews__textarea form__textarea" id="review" placeholder={placeholder}></textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-          {textarea}
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
       </div>

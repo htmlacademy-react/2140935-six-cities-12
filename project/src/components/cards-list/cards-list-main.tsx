@@ -7,7 +7,6 @@ type CardsListMainProps = {
 }
 
 function CardsListMain({offers}: CardsListMainProps): JSX.Element {
-  const cardType = 'main';
   const hotelCount = offers.length;
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const onMouseOver = (id: number) => setActiveCardId(id);
@@ -37,7 +36,7 @@ function CardsListMain({offers}: CardsListMainProps): JSX.Element {
           <Card
             key={item.id}
             offer={item}
-            cardType={cardType}
+            cardType={'main'}
             isActive={activeCardId === item.id}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}

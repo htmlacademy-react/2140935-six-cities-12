@@ -16,6 +16,8 @@ export type Offer = {
   reviewIds: number[];
   isFavorites: boolean;
   city: string;
+  lat: number;
+  lng: number;
 };
 
 export type Review = {

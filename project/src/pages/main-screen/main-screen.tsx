@@ -2,6 +2,8 @@ import {Helmet} from 'react-helmet-async';
 import {Offer} from '../../types/offer';
 import Header from '../../components/header/header';
 import CardsListMain from '../../components/cards-list/cards-list-main';
+import Map from '../../components/map/map';
+import {CITY} from '../../mocks/city';
 
 type MainScreenProps = {
   offers: Offer[];
@@ -57,7 +59,9 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <CardsListMain offers={offers} />
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={CITY} offers={offers} />
+              </section>
             </div>
           </div>
         </div>
