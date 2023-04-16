@@ -9,20 +9,20 @@ import {URL_MARKER_DEFAULT} from '../../const';
 type MapProps = {
   city: City;
   offers: Offer[];
+  mapHeight: number;
 }
 
-function Map({city, offers}: MapProps): JSX.Element {
+function Map({city, offers, mapHeight}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map: leaflet.Map | null = useMap(mapRef, city);
 
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
   useEffect(() => {
     if (map) {
+      const defaultCustomIcon = leaflet.icon({
+        iconUrl: URL_MARKER_DEFAULT,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
       offers.forEach((point) => {
         leaflet
           .marker({
@@ -34,11 +34,11 @@ function Map({city, offers}: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, defaultCustomIcon]);
+  }, [map, offers]);
 
   return (
     <div
-      style={{height: '800px'}}
+      style={{height: `${mapHeight}px`}}
       ref={mapRef}
     >
     </div>
