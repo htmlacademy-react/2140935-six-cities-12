@@ -19,7 +19,7 @@ function CardsListNear({offers}: CardListNearProps): JSX.Element {
           <Card
             key={item.id}
             offer={item}
-            cardType={'near'}
+            cardType='near'
             isActive={activeCardId === item.id}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}

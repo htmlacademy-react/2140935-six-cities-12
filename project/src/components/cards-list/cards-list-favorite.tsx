@@ -33,7 +33,7 @@ function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element
                   <Card
                     key={item.id}
                     offer={item}
-                    cardType={'favorite'}
+                    cardType='favorite'
                     isActive={activeCardId === item.id}
                     onMouseOver={onMouseOver}
                     onMouseLeave={onMouseLeave}
