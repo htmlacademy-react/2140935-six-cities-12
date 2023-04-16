@@ -36,7 +36,7 @@ function CardsListMain({offers}: CardsListMainProps): JSX.Element {
           <Card
             key={item.id}
             offer={item}
-            cardType={'main'}
+            cardType='main'
             isActive={activeCardId === item.id}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}
