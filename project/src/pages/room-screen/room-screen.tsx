@@ -8,6 +8,8 @@ import CardsListNear from '../../components/cards-list/cards-list-near';
 import ReviewCard from '../../components/review-card/review-card';
 import Form from '../../components/form/form';
 import {RATIO} from '../../const';
+import Map from '../../components/map/map';
+import {DEFAULT_CITY} from '../../mocks/city';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -107,7 +109,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewIds.length}</span></h2>
                 <ul className="reviews__list">
                   {reviewIds.map((item) => (
                     <ReviewCard key={item} reviews={reviews} reviewId={item} />
@@ -119,10 +121,12 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <section className="property__map map">
+            <Map city={DEFAULT_CITY} offers={offers.slice(0, 3)} mapHeight={580} />
+          </section>
         </section>
         <div className="container">
-          <CardsListNear offers={offers} />
+          <CardsListNear offers={offers.slice(0, 3)} />
         </div>
       </main>
     </div>

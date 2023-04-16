@@ -7,7 +7,6 @@ type CardListNearProps = {
 }
 
 function CardsListNear({offers}: CardListNearProps): JSX.Element {
-  const cardType = 'near';
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const onMouseOver = (id: number) => setActiveCardId(id);
   const onMouseLeave = () => setActiveCardId(null);
@@ -20,7 +19,7 @@ function CardsListNear({offers}: CardListNearProps): JSX.Element {
           <Card
             key={item.id}
             offer={item}
-            cardType={cardType}
+            cardType={'near'}
             isActive={activeCardId === item.id}
             onMouseOver={onMouseOver}
             onMouseLeave={onMouseLeave}
