@@ -9,7 +9,7 @@ import ReviewCard from '../../components/review-card/review-card';
 import Form from '../../components/form/form';
 import {RATIO} from '../../const';
 import Map from '../../components/map/map';
-import {DEFAULT_CITY} from '../../mocks/city';
+import {DEFAULT_CITY_OLD} from '../../mocks/city';
 
 type RoomScreenProps = {
   offers: Offer[];
@@ -122,7 +122,7 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={DEFAULT_CITY} offers={offers.slice(0, 3)} mapHeight={580} />
+            <Map city={DEFAULT_CITY_OLD} offers={offers.slice(0, 3)} mapHeight={580} />
           </section>
         </section>
         <div className="container">

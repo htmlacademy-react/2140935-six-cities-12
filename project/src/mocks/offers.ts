@@ -125,8 +125,8 @@ export const offers: Offer[] = [
     reviewIds: [6],
     isFavorites: false,
     city: 'Paris',
-    lat: 53.3909553943508,
-    lng: 4.85309666406198
+    lat: 48.8866553943508,
+    lng: 2.35229666406198
   },
   {
     id: 6,
@@ -146,8 +146,8 @@ export const offers: Offer[] = [
     reviewIds: [],
     isFavorites: true,
     city: 'Paris',
-    lat: 53.3909553943508,
-    lng: 4.85309666406198
+    lat: 48.8566555943508,
+    lng: 2.35259666406198
   },
   {
     id: 7,
@@ -167,8 +167,8 @@ export const offers: Offer[] = [
     reviewIds: [7],
     isFavorites: true,
     city: 'Paris',
-    lat: 53.3909553943508,
-    lng: 4.85309666406198
+    lat: 48.8719553943508,
+    lng: 2.37299666406198
   },
   {
     id: 8,

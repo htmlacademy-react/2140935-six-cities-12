@@ -1,6 +1,9 @@
-export const DEFAULT_CITY = {
-  title: 'Amsterdam',
-  lat: 52.3676553943508,
-  lng: 4.90409666406198,
-  zoom: 10,
-};
+import {City} from '../types/city';
+
+export const DEFAULT_CITY_OLD: City =
+  {
+    title: 'Paris',
+    lat: 48.8566553943508,
+    lng: 2.35229666406198,
+    zoom: 10,
+  };

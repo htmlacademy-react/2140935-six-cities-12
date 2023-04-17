@@ -17,3 +17,44 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const DEFAULT_CITY_NAME = 'Paris';
+
+export const CITIES = [
+  {
+    title: 'Paris',
+    lat: 48.8566553943508,
+    lng: 2.35229666406198,
+    zoom: 10,
+  },
+  {
+    title: 'Cologne',
+    lat: 50.9375553943508,
+    lng: 6.96039666406198,
+    zoom: 10,
+  },
+  {
+    title: 'Brussels',
+    lat: 50.8476553943508,
+    lng: 4.35729666406198,
+    zoom: 10,
+  },
+  {
+    title: 'Amsterdam',
+    lat: 52.3676553943508,
+    lng: 4.90409666406198,
+    zoom: 10,
+  },
+  {
+    title: 'Hamburg',
+    lat: 53.5488553943508,
+    lng: 9.98729666406198,
+    zoom: 10,
+  },
+  {
+    title: 'Dusseldorf',
+    lat: 51.2277553943508,
+    lng: 6.77359666406198,
+    zoom: 10,
+  }
+];
