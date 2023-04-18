@@ -1,7 +1,6 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 
-import {Offer} from '../../types/offer';
 import {Review} from '../../types/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -13,12 +12,11 @@ import PrivateRoute from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 type AppScreenProps = {
-  offers: Offer[];
   reviews: Review[];
   cities: string[];
 }
 
-function App({offers, reviews, cities}: AppScreenProps): JSX.Element {
+function App({reviews, cities}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -38,14 +36,14 @@ function App({offers, reviews, cities}: AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesScreen offers={offers} cities={cities} />
+                <FavoritesScreen cities={cities} />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Room}
             element={
-              <RoomScreen offers={offers} reviews={reviews}/>
+              <RoomScreen reviews={reviews}/>
             }
           />
           <Route

@@ -1,7 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
-
-import {Offer} from '../../types/offer';
+import { useAppSelector } from '../../hooks';
 import {Review} from '../../types/offer';
 import Header from '../../components/header/header';
 import CardsListNear from '../../components/cards-list/cards-list-near';
@@ -12,13 +11,13 @@ import Map from '../../components/map/map';
 import {DEFAULT_CITY_OLD} from '../../mocks/city';
 
 type RoomScreenProps = {
-  offers: Offer[];
   reviews: Review[];
 };
 
-function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
+function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
   const params = useParams();
-  const offer = offers.find((room) => room.id.toString() === params.id);
+  const allOffers = useAppSelector((state) => state.allOffers);
+  const offer = allOffers.find((room) => room.id.toString() === params.id);
   if (!offer) {
     return <>Not found</>;
   }
@@ -122,11 +121,11 @@ function RoomScreen({offers, reviews}: RoomScreenProps): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={DEFAULT_CITY_OLD} offers={offers.slice(0, 3)} mapHeight={580} />
+            <Map city={DEFAULT_CITY_OLD} offers={allOffers.slice(0, 3)} mapHeight={580} />
           </section>
         </section>
         <div className="container">
-          <CardsListNear offers={offers.slice(0, 3)} />
+          <CardsListNear offers={allOffers.slice(0, 3)} />
         </div>
       </main>
     </div>

@@ -1,28 +1,29 @@
 import { Link } from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeCity, loadOffers} from '../../store/action';
-import {CITIES} from '../../const';
+import {setCurrentCity, loadOffers} from '../../store/action';
+import {CITIES_NAMES} from '../../const';
 
 function CityList(): JSX.Element {
   const activeCity = useAppSelector((state) => state.selectedCity);
   const dispatch = useAppDispatch();
-  const cityTitles = CITIES.map((city) => city.title);
+
+  const handleCityClick = (cityName: string) => {
+    dispatch(setCurrentCity({selectedCity: cityName}));
+    dispatch(loadOffers());
+  };
 
   return (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cityTitles.map((cityTitle) => (
-            <li className="locations__item" key={cityTitle}>
+          {CITIES_NAMES.map((cityName) => (
+            <li className="locations__item" key={cityName}>
               <Link
                 to="/"
-                className={`locations__item-link  tabs__item ${activeCity === cityTitle ? 'tabs__item--active' : ''}`}
-                onClick={() => {
-                  dispatch(changeCity({selectedCity: cityTitle}));
-                  dispatch(loadOffers());
-                }}
+                className={`locations__item-link  tabs__item ${activeCity === cityName ? 'tabs__item--active' : ''}`}
+                onClick={() => handleCityClick(cityName)}
               >
-                <span>{cityTitle}</span>
+                <span>{cityName}</span>
               </Link>
             </li>
           ))}

@@ -1,15 +1,16 @@
 import {Helmet} from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import CardsListFavorite from '../../components/cards-list/cards-list-favorite';
-import {Offer} from '../../types/offer';
 
 type FavoritesScreenProps = {
-  offers: Offer[];
   cities: string[];
 }
 
-function FavoritesScreen({offers, cities}: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen({cities}: FavoritesScreenProps): JSX.Element {
+  const allOffers = useAppSelector((state) => state.allOffers);
+
   return (
     <div className="page">
       <Helmet>
@@ -18,7 +19,7 @@ function FavoritesScreen({offers, cities}: FavoritesScreenProps): JSX.Element {
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <CardsListFavorite offers={offers} cities={cities} />
+          <CardsListFavorite offers={allOffers} cities={cities} />
         </div>
       </main>
       <Footer />

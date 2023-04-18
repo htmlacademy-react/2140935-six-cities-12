@@ -7,12 +7,13 @@ import CityList from '../../components/city-list/city-list';
 import {useAppSelector} from '../../hooks';
 
 function MainScreen(): JSX.Element {
-  const mainOffers = useAppSelector((state) => state.mainScreenOffers);
+  const allOffers = useAppSelector((state) => state.allOffers);
   const selectedCityTitle = useAppSelector((state) => state.selectedCity);
   const selectedCity = CITIES.find((city) => city.title === selectedCityTitle);
   if (!selectedCity) {
     return <>Not found</>;
   }
+  const mainOffers = allOffers.filter((offer) => offer.city === selectedCityTitle);
 
   return (
     <div className="page page--gray page--main">

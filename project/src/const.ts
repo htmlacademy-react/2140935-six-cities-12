@@ -58,3 +58,5 @@ export const CITIES = [
     zoom: 10,
   }
 ];
+
+export const CITIES_NAMES = CITIES.map((city) => city.title);
