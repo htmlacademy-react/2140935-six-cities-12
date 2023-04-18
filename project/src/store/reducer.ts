@@ -20,5 +20,3 @@ const reducer = createReducer(initialState, (builder) => {
 });
 
 export {reducer};
-
-//      state.mainScreenOffers = offers.filter((offer) => offer.city === state.selectedCity);
