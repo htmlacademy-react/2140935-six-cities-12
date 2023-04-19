@@ -5,7 +5,7 @@ import {DEFAULT_CITY_NAME} from '../const';
 
 const initialState = {
   selectedCity: DEFAULT_CITY_NAME,
-  allOffers: offers.filter((offer) => offer.city === DEFAULT_CITY_NAME),
+  allOffers: offers,
 };
 
 const reducer = createReducer(initialState, (builder) => {

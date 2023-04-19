@@ -5,15 +5,16 @@ import Map from '../../components/map/map';
 import {CITIES} from '../../const';
 import CityList from '../../components/city-list/city-list';
 import {useAppSelector} from '../../hooks';
+import {getOffers, getCurrentCity} from '../../store/selectors';
 
 function MainScreen(): JSX.Element {
-  const allOffers = useAppSelector((state) => state.allOffers);
-  const selectedCityTitle = useAppSelector((state) => state.selectedCity);
-  const selectedCity = CITIES.find((city) => city.title === selectedCityTitle);
-  if (!selectedCity) {
+  const offers = useAppSelector(getOffers);
+  const currentCityTitle = useAppSelector(getCurrentCity);
+  const currentCity = CITIES.find((city) => city.title === currentCityTitle);
+  const mainOffers = offers.filter((offer) => offer.city === currentCityTitle);
+  if (!currentCity) {
     return <>Not found</>;
   }
-  const mainOffers = allOffers.filter((offer) => offer.city === selectedCityTitle);
 
   return (
     <div className="page page--gray page--main">
@@ -27,10 +28,10 @@ function MainScreen(): JSX.Element {
         <CityList />
         <div className="cities">
           <div className="cities__places-container container">
-            <CardsListMain offers={mainOffers} city={selectedCityTitle} />
+            <CardsListMain offers={mainOffers} city={currentCityTitle} />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={selectedCity} offers={mainOffers} mapHeight={800} />
+                <Map city={currentCity} offers={mainOffers} mapHeight={800} />
               </section>
             </div>
           </div>

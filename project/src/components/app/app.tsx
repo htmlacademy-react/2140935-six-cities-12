@@ -13,10 +13,9 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 type AppScreenProps = {
   reviews: Review[];
-  cities: string[];
 }
 
-function App({reviews, cities}: AppScreenProps): JSX.Element {
+function App({reviews}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -36,7 +35,7 @@ function App({reviews, cities}: AppScreenProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesScreen cities={cities} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {setCurrentCity, loadOffers} from '../../store/action';
+import {setCurrentCity} from '../../store/action';
 import {CITIES_NAMES} from '../../const';
 
 function CityList(): JSX.Element {
@@ -9,7 +9,6 @@ function CityList(): JSX.Element {
 
   const handleCityClick = (cityName: string) => {
     dispatch(setCurrentCity({selectedCity: cityName}));
-    dispatch(loadOffers());
   };
 
   return (
