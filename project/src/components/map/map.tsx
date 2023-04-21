@@ -23,6 +23,13 @@ function Map({city, offers, mapHeight}: MapProps): JSX.Element {
         iconSize: [40, 40],
         iconAnchor: [20, 40],
       });
+
+      map.eachLayer((layer) => {
+        if (layer instanceof leaflet.Marker) {
+          layer.remove();
+        }
+      });
+
       offers.forEach((point) => {
         leaflet
           .marker({
@@ -34,7 +41,7 @@ function Map({city, offers, mapHeight}: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers]);
+  }, [map, offers, city]);
 
   return (
     <div

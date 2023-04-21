@@ -2,13 +2,13 @@ import {useState} from 'react';
 import {Offer} from '../../types/offer';
 import Card from '../card/card';
 import {Link} from 'react-router-dom';
+import {CITIES_NAMES} from '../../const';
 
 type CardListFavoriteProps = {
   offers: Offer[];
-  cities: string[];
 }
 
-function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element {
+function CardsListFavorite({offers}: CardListFavoriteProps): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const onMouseOver = (id: number) => setActiveCardId(id);
   const onMouseLeave = () => setActiveCardId(null);
@@ -17,7 +17,7 @@ function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
-        {cities.map((city) => (
+        {CITIES_NAMES.map((city) => (
           offers.some((item) => item.city === city) && (
             <li key={city} className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
@@ -33,7 +33,7 @@ function CardsListFavorite({offers, cities}: CardListFavoriteProps): JSX.Element
                   <Card
                     key={item.id}
                     offer={item}
-                    cardType='favorite'
+                    cardType="favorite"
                     isActive={activeCardId === item.id}
                     onMouseOver={onMouseOver}
                     onMouseLeave={onMouseLeave}

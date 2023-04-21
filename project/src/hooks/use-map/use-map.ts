@@ -27,8 +27,10 @@ function useMap(mapRef: React.MutableRefObject<null>, city: City) {
 
       setMap(instance);
       isRenderedRef.current = true;
+    } else if (map && (city.lat !== map.getCenter().lat || city.lng !== map.getCenter().lng || city.zoom !== map.getZoom())) {
+      map.setView([city.lat, city.lng], city.zoom);
     }
-  }, [mapRef, city]);
+  }, [mapRef, city, map]);
 
   return map;
 }
