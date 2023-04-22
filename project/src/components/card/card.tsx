@@ -13,8 +13,8 @@ type CardProps = {
 
 function Card(props: CardProps): JSX.Element {
   const {offer, cardType, isActive, onMouseOver, onMouseLeave} = props;
-  const {id, title, city, images, isPremium, type, price, rate} = offer;
-  const ratePercent = parseFloat(rate) * RATIO;
+  const {id, title, city, previewImage, isPremium, type, price, rating} = offer;
+  const ratePercent = parseFloat(rating) * RATIO;
 
   return (
     <article
@@ -27,7 +27,7 @@ function Card(props: CardProps): JSX.Element {
       </div>
       <div className={`${cardType === 'main' ? 'cities__image-wrapper' : ''} ${cardType === 'near' ? 'near-places__image-wrapper' : ''} ${cardType === 'favorite' ? 'favorites__image-wrapper' : ''} place-card__image-wrapper`}>
         <Link to={AppRoute.Room.replace(':id', id.toString())}>
-          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place card" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place card" />
         </Link>
       </div>
       <div className={`${cardType === 'favorite' ? 'favorites__card-info' : ''} place-card__info`}>
@@ -50,7 +50,7 @@ function Card(props: CardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.Room.replace(':id', id.toString())}>{title} ({city})</Link>
+          <Link to={AppRoute.Room.replace(':id', id.toString())}>{title} ({city.name})</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

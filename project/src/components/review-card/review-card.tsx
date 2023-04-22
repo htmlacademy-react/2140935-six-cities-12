@@ -2,26 +2,24 @@ import {Review} from '../../types/offer';
 import {RATIO} from '../../const';
 
 type ReviewProps = {
-  reviews: Review[];
-  reviewId: number;
+  review: Review;
 };
 
-function ReviewCard({reviews, reviewId}: ReviewProps): JSX.Element {
-  const review = reviews.find((item) => item.id === reviewId);
+function ReviewCard({review}: ReviewProps): JSX.Element {
   if (!review) {
     return <>Not found</>;
   }
-  const {nickname, avatar, date, rate, text} = review;
-  const ratePercent = rate * RATIO;
+  const {user, rating, comment, date} = review;
+  const ratePercent = rating * RATIO;
 
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={avatar} width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">
-          {nickname}
+          {user.name}
         </span>
       </div>
       <div className="reviews__info">
@@ -32,7 +30,7 @@ function ReviewCard({reviews, reviewId}: ReviewProps): JSX.Element {
           </div>
         </div>
         <p className="reviews__text">
-          {text}
+          {comment}
         </p>
         <time className="reviews__time" dateTime="2019-04-24">{date}</time>
       </div>

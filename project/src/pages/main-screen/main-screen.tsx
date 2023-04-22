@@ -2,17 +2,18 @@ import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
 import CardsListMain from '../../components/cards-list/cards-list-main';
 import Map from '../../components/map/map';
-import {CITIES} from '../../const';
 import CityList from '../../components/city-list/city-list';
 import {useAppSelector} from '../../hooks';
 import {getOffers, getCurrentCity} from '../../store/selectors';
 
 function MainScreen(): JSX.Element {
   const offers = useAppSelector(getOffers);
-  const currentCityTitle = useAppSelector(getCurrentCity);
-  const currentCity = CITIES.find((city) => city.title === currentCityTitle);
-  const mainOffers = offers.filter((offer) => offer.city === currentCityTitle);
-  if (!currentCity) {
+  const currentCityName = useAppSelector(getCurrentCity);
+  const mainOffers = offers.filter((offer) => offer.city.name === currentCityName);
+  const {city} = mainOffers[0];
+  const offer = mainOffers[0];
+
+  if (!mainOffers[0]) {
     return <>Not found</>;
   }
 
@@ -28,10 +29,10 @@ function MainScreen(): JSX.Element {
         <CityList />
         <div className="cities">
           <div className="cities__places-container container">
-            <CardsListMain offers={mainOffers} city={currentCityTitle} />
+            <CardsListMain offers={mainOffers} city={currentCityName} />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={currentCity} offers={mainOffers} mapHeight={800} />
+                <Map city={city} offers={mainOffers} currentOffer={offer} mapHeight={800} />
               </section>
             </div>
           </div>
