@@ -38,7 +38,7 @@ export const fetchCommentsAction = createAsyncThunk<void, number, {
   'data/fetchComments',
   async (id, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
-    const {data} = await api.get<Review[]>(`/comments/${id}`);
+    const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadComments(data));
   },
@@ -52,7 +52,7 @@ export const fetchNearbyAction = createAsyncThunk<void, number, {
   'data/fetchNearby',
   async (id, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
-    const {data} = await api.get<Offer[]>(`/hotels/${id}/nearby`);
+    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
     dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadNearby(data));
   },
