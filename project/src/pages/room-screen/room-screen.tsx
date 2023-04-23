@@ -12,19 +12,17 @@ import {useEffect} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
 
 function RoomScreen(): JSX.Element {
+  const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
 
   useEffect(() => {
-    if (params.id !== undefined) {
+    if (params.id) {
       store.dispatch(fetchRoomOfferAction(parseInt(params.id, 10)));
       store.dispatch(fetchReviewsAction(parseInt(params.id, 10)));
       store.dispatch(fetchNearbyAction(parseInt(params.id, 10)));
     }
   }, [params.id]);
 
-  const {roomOffer, nearbyOffers} = useAppSelector(getRoomAndNearby);
-
-  const offer = roomOffer;
   if (!offer) {
     return <>Not found</>;
   }
