@@ -1,15 +1,37 @@
 import {createAction} from '@reduxjs/toolkit';
 import {Offer} from '../types/offer';
 import {Review} from '../types/offer';
+import {AuthorizationStatus} from '../const';
+
+type LoadOffersPayload = {
+  isLoading: boolean;
+  data: Offer[];
+};
+
+type LoadRoomPayload = {
+  isLoading: boolean;
+  data: Offer | null;
+};
+
+type LoadReviewPayload = {
+  isLoading: boolean;
+  data: Review[];
+};
 
 export const setCurrentCity = createAction<{selectedCity: string}>('mainScreen/setCurrentCity');
 
-export const loadOffers = createAction<Offer[]>('mainScreen/loadOffers');
+export const loadOffers = createAction<LoadOffersPayload>('mainScreen/loadOffers');
 
-export const loadComments = createAction<Review[]>('roomScreen/loadComments');
+export const loadFavoriteOffers = createAction<LoadOffersPayload>('favoriteScreen/loadFavoriteOffers');
 
-export const loadNearby = createAction<Offer[]>('roomScreen/loadNearby');
+export const loadRoom = createAction<LoadRoomPayload>('roomScreen/loadRoom');
 
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+export const loadReviews = createAction<LoadReviewPayload>('roomScreen/loadReviews');
+
+export const loadNearby = createAction<LoadOffersPayload>('roomScreen/loadNearby');
+
+export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
+
+export const setUserEmail = createAction<{userEmail: string}>('user/email');
 
 export const setError = createAction<string | null>('data/setError');
