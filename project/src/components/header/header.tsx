@@ -3,7 +3,8 @@ import {useAppSelector} from '../../hooks';
 import SignIn from '../sign-in-out/sign-in';
 import SignOut from '../sign-in-out/sign-out';
 import UserEmail from '../user-email/user-email';
-import { getAuthorizationStatus } from '../../store/selectors';
+import {getAuthorizationStatus} from '../../store/selectors';
+import {AuthorizationStatus} from '../../const';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -15,8 +16,13 @@ function Header(): JSX.Element {
           <Logo />
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {authorizationStatus === 'AUTH' ? (<UserEmail />) : null}
-              {authorizationStatus === 'AUTH' ? (<SignOut />) : (<SignIn />)}
+              {authorizationStatus === AuthorizationStatus.Auth
+                ? (
+                  <>
+                    <UserEmail />
+                    <SignOut />
+                  </>
+                ) : <SignIn />}
             </ul>
           </nav>
         </div>
