@@ -3,10 +3,11 @@ import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token';
 import {processErrorHandle} from './process-error-handle';
 
+const {BAD_REQUEST, UNAUTHORIZED, NOT_FOUND} = StatusCodes;
 const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
+  [BAD_REQUEST]: true,
+  [UNAUTHORIZED]: true,
+  [NOT_FOUND]: true
 };
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
