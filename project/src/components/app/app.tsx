@@ -2,7 +2,7 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
 import {useAppSelector} from '../../hooks';
 
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
@@ -17,7 +17,7 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoading);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  if (isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
