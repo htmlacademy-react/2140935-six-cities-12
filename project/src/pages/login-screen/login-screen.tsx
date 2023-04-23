@@ -1,5 +1,5 @@
 import {Helmet} from 'react-helmet-async';
-import {useRef, FormEvent} from 'react';
+import {useEffect, useState, FormEvent, ChangeEvent} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
@@ -11,13 +11,15 @@ import {getAuthorizationStatus} from '../../store/selectors';
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  if (authorizationStatus === 'AUTH') {
-    navigate(AppRoute.Root);
-  }
+  useEffect(() => {
+    if (authorizationStatus === 'AUTH') {
+      navigate(AppRoute.Root);
+    }
+  }, [authorizationStatus, navigate]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -25,14 +27,19 @@ function LoginScreen(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    onSubmit({
+      login,
+      password,
+    });
+    navigate(AppRoute.Root);
+  };
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
-      navigate(AppRoute.Root);
-    }
+  const handleLoginChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setLogin(evt.target.value);
+  };
+
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setPassword(evt.target.value);
   };
 
   return (
@@ -55,11 +62,29 @@ function LoginScreen(): JSX.Element {
             <form className="login__form form" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input ref={loginRef} className="login__input form__input" type="text" name="name" id="name" placeholder="Email" required />
+                <input
+                  className="login__input form__input"
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Email"
+                  value={login}
+                  onChange={handleLoginChange}
+                  required
+                />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input ref={passwordRef} className="login__input form__input" type="text" name="password" id="password" placeholder="Password" required />
+                <input
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
+                />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
