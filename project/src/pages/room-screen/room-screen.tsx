@@ -1,28 +1,30 @@
 import {useParams} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
-import {Review} from '../../types/offer';
 import Header from '../../components/header/header';
 import CardsListNear from '../../components/cards-list/cards-list-near';
-import ReviewCard from '../../components/review-card/review-card';
-import Form from '../../components/form/form';
 import {RATIO} from '../../const';
 import Map from '../../components/map/map';
-import {DEFAULT_CITY_OLD} from '../../mocks/city';
+import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
+import {store} from '../../store';
+import ReviewList from '../../components/review-list/review-list';
 
-type RoomScreenProps = {
-  reviews: Review[];
-};
-
-function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
+function RoomScreen(): JSX.Element {
   const params = useParams();
-  const allOffers = useAppSelector((state) => state.allOffers);
+  if (params.id !== undefined) {
+    store.dispatch(fetchCommentsAction(parseInt(params.id, 10)));
+    store.dispatch(fetchNearbyAction(parseInt(params.id, 10)));
+  }
+  const {allOffers, nearbyOffers} = useAppSelector((state) => ({
+    allOffers: state.allOffers,
+    nearbyOffers: state.nearbyOffers,
+  }));
   const offer = allOffers.find((room) => room.id.toString() === params.id);
   if (!offer) {
     return <>Not found</>;
   }
-  const {title, description, images, rate, isPremium, type, inside, bedrooms, adults, price, host, avatar, isPro, city, reviewIds, isFavorites} = offer;
-  const ratePercent = parseFloat(rate) * RATIO;
+  const {title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
+  const ratePercent = parseFloat(rating) * RATIO;
 
   return (
     <div className="page">
@@ -30,7 +32,6 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
         <title>{title} | 6 Cities</title>
       </Helmet>
       <Header />
-
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -49,9 +50,9 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
               </div>
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {title} ({city})
+                  {title} ({city.name})
                 </h1>
-                <button className={`property__bookmark-button ${isFavorites ? 'property__bookmark-button--active' : ''} button`} type="button">
+                <button className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active' : ''} button`} type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -63,7 +64,7 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
                   <span style={{width: `${ratePercent}%`}} />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{rate}</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
@@ -73,7 +74,7 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
                   {bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {adults} adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -83,7 +84,7 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {inside.map((ins) => (
+                  {goods.map((ins) => (
                     <li key={ins} className="property__inside-item">{ins}</li>
                   ))}
                 </ul>
@@ -91,14 +92,14 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
-                  <div className={`property__avatar-wrapper ${isPro ? 'property__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
-                    <img className="property__avatar user__avatar" src={avatar} width="74" height="74" alt="Host avatar" />
+                  <div className={`property__avatar-wrapper ${host.isPro ? 'property__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {host}
+                    {host.name}
                   </span>
                   <span className="property__user-status">
-                    { isPro ? 'Pro' : null }
+                    {host.isPro ? 'Pro' : null}
                   </span>
                 </div>
                 <div className="property__description">
@@ -107,25 +108,15 @@ function RoomScreen({reviews}: RoomScreenProps): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewIds.length}</span></h2>
-                <ul className="reviews__list">
-                  {reviewIds.map((item) => (
-                    <ReviewCard key={item} reviews={reviews} reviewId={item} />
-                  ))}
-                </ul>
-
-                <Form />
-
-              </section>
+              <ReviewList />
             </div>
           </div>
           <section className="property__map map">
-            <Map city={DEFAULT_CITY_OLD} offers={allOffers.slice(0, 3)} mapHeight={580} />
+            <Map city={city} offers={nearbyOffers} currentOffer={offer} mapHeight={580} />
           </section>
         </section>
         <div className="container">
-          <CardsListNear offers={allOffers.slice(0, 3)} />
+          <CardsListNear offers={nearbyOffers} />
         </div>
       </main>
     </div>

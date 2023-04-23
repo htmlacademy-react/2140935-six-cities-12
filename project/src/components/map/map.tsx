@@ -9,10 +9,11 @@ import {URL_MARKER_DEFAULT} from '../../const';
 type MapProps = {
   city: City;
   offers: Offer[];
+  currentOffer: Offer;
   mapHeight: number;
 }
 
-function Map({city, offers, mapHeight}: MapProps): JSX.Element {
+function Map({city, offers, currentOffer, mapHeight}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map: leaflet.Map | null = useMap(mapRef, city);
 
@@ -33,8 +34,8 @@ function Map({city, offers, mapHeight}: MapProps): JSX.Element {
       offers.forEach((point) => {
         leaflet
           .marker({
-            lat: point.lat,
-            lng: point.lng,
+            lat: point.location.latitude,
+            lng: point.location.longitude,
           }, {
             icon: defaultCustomIcon,
           })

@@ -60,3 +60,10 @@ export const CITIES = [
 ];
 
 export const CITIES_NAMES = CITIES.map((city) => city.title);
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}

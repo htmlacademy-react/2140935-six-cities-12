@@ -18,7 +18,7 @@ function CardsListFavorite({offers}: CardListFavoriteProps): JSX.Element {
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
         {CITIES_NAMES.map((city) => (
-          offers.some((item) => item.city === city) && (
+          offers.some((item) => item.city.name === city) && (
             <li key={city} className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
@@ -28,13 +28,13 @@ function CardsListFavorite({offers}: CardListFavoriteProps): JSX.Element {
                 </div>
               </div>
               <div className="favorites__places">
-                {offers.map((item) => (
-                  item.isFavorites && item.city === city &&
+                {offers.map((place) => (
+                  place.isFavorite && place.city.name === city &&
                   <Card
-                    key={item.id}
-                    offer={item}
+                    key={place.id}
+                    offer={place}
                     cardType="favorite"
-                    isActive={activeCardId === item.id}
+                    isActive={activeCardId === place.id}
                     onMouseOver={onMouseOver}
                     onMouseLeave={onMouseLeave}
                   />

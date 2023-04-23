@@ -1,30 +1,47 @@
 export type Offer = {
-  id: number;
-  title: string;
-  description: string;
-  images: string[];
-  rate: string;
-  isPremium: boolean;
-  type: string;
-  inside: string[];
   bedrooms: number;
-  adults: number;
+  city: {
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+  };
+  description: string;
+  goods: string[];
+  host: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
+  id: number;
+  images: string[];
+  isFavorite: boolean;
+  isPremium: boolean;
+  location: {
+    latitude: number;
+    longitude: number;
+    zoom: number;
+  };
+  maxAdults: number;
+  previewImage: string;
   price: number;
-  host: string;
-  avatar: string;
-  isPro: boolean;
-  reviewIds: number[];
-  isFavorites: boolean;
-  city: string;
-  lat: number;
-  lng: number;
+  rating: string;
+  title: string;
+  type: string;
 };
 
 export type Review = {
   id: number;
-  nickname: string;
-  avatar: string;
+  user: {
+    id: number;
+    isPro: boolean;
+    name: string;
+    avatarUrl: string;
+  };
+  rating: number;
+  comment: string;
   date: string;
-  rate: number;
-  text: string;
 };

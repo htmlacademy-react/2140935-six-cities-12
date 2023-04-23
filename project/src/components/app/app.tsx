@@ -1,7 +1,7 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
+import {useAppSelector} from '../../hooks';
 
-import {Review} from '../../types/offer';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -10,12 +10,17 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
-type AppScreenProps = {
-  reviews: Review[];
-}
+function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-function App({reviews}: AppScreenProps): JSX.Element {
+  if (isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -42,7 +47,7 @@ function App({reviews}: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.Room}
             element={
-              <RoomScreen reviews={reviews}/>
+              <RoomScreen />
             }
           />
           <Route
