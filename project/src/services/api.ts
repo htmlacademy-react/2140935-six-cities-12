@@ -3,9 +3,7 @@ import {StatusCodes} from 'http-status-codes';
 import {getToken} from './token';
 import {processErrorHandle} from './process-error-handle';
 
-type StatusCodeMappingType = Record<number, boolean>;
-
-const StatusCodeMapping: StatusCodeMappingType = {
+const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
   [StatusCodes.NOT_FOUND]: true
