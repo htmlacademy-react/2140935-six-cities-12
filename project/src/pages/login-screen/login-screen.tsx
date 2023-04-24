@@ -7,6 +7,7 @@ import {AuthData} from '../../types/auth-data';
 import {AppRoute} from '../../const';
 import Logo from '../../components/logo/logo';
 import {getAuthorizationStatus} from '../../store/selectors';
+import {AuthorizationStatus} from '../../const';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ function LoginScreen(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    if (authorizationStatus === 'AUTH') {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [authorizationStatus, navigate]);
