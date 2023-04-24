@@ -5,21 +5,24 @@ import Header from '../../components/header/header';
 import CardsListNear from '../../components/cards-list/cards-list-near';
 import {RATIO} from '../../const';
 import Map from '../../components/map/map';
-import {fetchCommentsAction, fetchNearbyAction} from '../../store/api-actions';
+import {fetchRoomOfferAction, fetchReviewsAction, fetchNearbyAction} from '../../store/api-actions';
 import {store} from '../../store';
 import ReviewList from '../../components/review-list/review-list';
+import {useEffect} from 'react';
+import {getRoomAndNearby} from '../../store/selectors';
 
 function RoomScreen(): JSX.Element {
+  const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
-  if (params.id !== undefined) {
-    store.dispatch(fetchCommentsAction(parseInt(params.id, 10)));
-    store.dispatch(fetchNearbyAction(parseInt(params.id, 10)));
-  }
-  const {allOffers, nearbyOffers} = useAppSelector((state) => ({
-    allOffers: state.allOffers,
-    nearbyOffers: state.nearbyOffers,
-  }));
-  const offer = allOffers.find((room) => room.id.toString() === params.id);
+
+  useEffect(() => {
+    if (params.id) {
+      store.dispatch(fetchRoomOfferAction(parseInt(params.id, 10)));
+      store.dispatch(fetchReviewsAction(parseInt(params.id, 10)));
+      store.dispatch(fetchNearbyAction(parseInt(params.id, 10)));
+    }
+  }, [params.id]);
+
   if (!offer) {
     return <>Not found</>;
   }

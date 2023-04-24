@@ -29,7 +29,7 @@ function CardsListFavorite({offers}: CardListFavoriteProps): JSX.Element {
               </div>
               <div className="favorites__places">
                 {offers.map((place) => (
-                  place.isFavorite && place.city.name === city &&
+                  place.city.name === city &&
                   <Card
                     key={place.id}
                     offer={place}

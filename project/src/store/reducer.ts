@@ -1,24 +1,60 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffers, loadComments, loadNearby, setOffersDataLoadingStatus, setError} from './action';
-import {DEFAULT_CITY_NAME} from '../const';
+import {setCurrentCity, loadOffers, loadFavoriteOffers, loadRoom, loadReviews, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {DEFAULT_CITY_NAME, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
 import {Review} from '../types/offer';
 
 type InitialState = {
   selectedCity: string;
-  allOffers: Offer[];
-  comments: Review[];
-  nearbyOffers: Offer[];
-  isOffersDataLoading: boolean;
+  allOffers: {
+    isLoading: boolean;
+    data: Offer[];
+  };
+  favoriteOffers: {
+    isLoading: boolean;
+    data: Offer[];
+  };
+  room: {
+    isLoading: boolean;
+    data: Offer | null;
+  };
+  reviews: {
+    isLoading: boolean;
+    data: Review[];
+  };
+  nearbyOffers: {
+    isLoading: boolean;
+    data: Offer[];
+  };
+  authorizationStatus: AuthorizationStatus;
+  userEmail: string;
   error: string | null;
 }
 
 const initialState: InitialState = {
   selectedCity: DEFAULT_CITY_NAME,
-  allOffers: [],
-  comments: [],
-  nearbyOffers: [],
-  isOffersDataLoading: false,
+  allOffers: {
+    isLoading: false,
+    data: [],
+  },
+  favoriteOffers: {
+    isLoading: false,
+    data: [],
+  },
+  room: {
+    isLoading: false,
+    data: null,
+  },
+  reviews: {
+    isLoading: false,
+    data: [],
+  },
+  nearbyOffers: {
+    isLoading: false,
+    data: [],
+  },
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userEmail: '',
   error: null,
 };
 
@@ -31,14 +67,24 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.allOffers = action.payload;
     })
-    .addCase(loadComments, (state, action) => {
-      state.comments = action.payload;
+    .addCase(loadFavoriteOffers, (state, action) => {
+      state.favoriteOffers = action.payload;
+    })
+    .addCase(loadRoom, (state, action) => {
+      state.room = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(loadNearby, (state, action) => {
       state.nearbyOffers = action.payload;
     })
-    .addCase(setOffersDataLoadingStatus, (state, action) => {
-      state.isOffersDataLoading = action.payload;
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserEmail, (state, action) => {
+      const {userEmail} = action.payload;
+      state.userEmail = userEmail;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

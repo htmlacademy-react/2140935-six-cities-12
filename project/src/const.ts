@@ -5,6 +5,8 @@ export const STARS = 5; // максимальный балл оценки
 export const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
 export const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -63,7 +65,8 @@ export const CITIES_NAMES = CITIES.map((city) => city.title);
 
 export enum APIRoute {
   Offers = '/hotels',
-  Comments = '/comments',
+  Favorites = '/favorite',
+  Reviews = '/comments',
   Login = '/login',
   Logout = '/logout',
 }
