@@ -1,11 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffers, loadFavoriteOffers, setFavoriteStatus, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {setCurrentCity, setActiveCardId, loadOffers, loadFavoriteOffers, setFavoriteStatus, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
 import {DEFAULT_CITY_NAME, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
 import {Review} from '../types/offer';
 
 type InitialState = {
   selectedCity: string;
+  activeCardId: number;
   allOffers: {
     isLoading: boolean;
     data: Offer[];
@@ -38,6 +39,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   selectedCity: DEFAULT_CITY_NAME,
+  activeCardId: 0,
   allOffers: {
     isLoading: false,
     data: [],
@@ -73,6 +75,10 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setCurrentCity, (state, action) => {
       const {selectedCity} = action.payload;
       state.selectedCity = selectedCity;
+    })
+    .addCase(setActiveCardId, (state, action) => {
+      const {activeCardId} = action.payload;
+      state.activeCardId = activeCardId;
     })
     .addCase(loadOffers, (state, action) => {
       state.allOffers = action.payload;

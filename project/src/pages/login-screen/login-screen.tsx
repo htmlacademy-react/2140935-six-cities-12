@@ -8,6 +8,7 @@ import {AppRoute} from '../../const';
 import Logo from '../../components/logo/logo';
 import {getAuthorizationStatus} from '../../store/selectors';
 import {AuthorizationStatus} from '../../const';
+import RandomCity from '../../components/random-city/random-city';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -90,13 +91,7 @@ function LoginScreen(): JSX.Element {
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
-          <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
-            </div>
-          </section>
+          <RandomCity />
         </div>
       </main>
     </div>

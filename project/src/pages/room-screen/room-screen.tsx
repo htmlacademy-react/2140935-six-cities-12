@@ -128,7 +128,7 @@ function RoomScreen(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={nearbyOffers} currentOffer={offer} mapHeight={580} />
+            <Map city={city} offers={[...nearbyOffers, offer]} currentOffer={offer} mapHeight={580} />
           </section>
         </section>
         <div className="container">

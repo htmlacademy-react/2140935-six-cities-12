@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {setCurrentCity} from '../../store/action';
 import {CITIES_NAMES} from '../../const';
-import { getCurrentCity } from '../../store/selectors';
+import {getCurrentCity} from '../../store/selectors';
 
 function CityList(): JSX.Element {
   const currentCity = useAppSelector(getCurrentCity);
