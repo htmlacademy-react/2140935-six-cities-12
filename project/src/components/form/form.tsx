@@ -20,7 +20,7 @@ function Form({roomId}: FormProps): JSX.Element {
   const placeholder = 'Tell how was your stay, what you like and what can be improved';
   const starsValue = generateStars();
 
-  const [state, setState] = useState({ comment: '', rating: 0 });
+  const [state, setState] = useState({comment: '', rating: 0});
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=> {
     const {name, value} = evt.target;

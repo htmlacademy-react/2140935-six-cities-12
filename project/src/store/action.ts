@@ -29,11 +29,13 @@ export const loadOffers = createAction<LoadOffersPayload>('mainScreen/loadOffers
 
 export const loadFavoriteOffers = createAction<LoadOffersPayload>('favoriteScreen/loadFavoriteOffers');
 
+export const setFavoriteStatus = createAction<{favoriteStatus: number}>('data/setFavoriteStatus');
+
 export const loadRoom = createAction<LoadRoomPayload>('roomScreen/loadRoom');
 
 export const loadReviews = createAction<LoadReviewPayload>('roomScreen/loadReviews');
 
-export const sendReview = createAction<SendReviewPayload>('roomScreen/sendReview');
+export const sendReview = createAction<SendReviewPayload>('data/sendReview');
 
 export const loadNearby = createAction<LoadOffersPayload>('roomScreen/loadNearby');
 

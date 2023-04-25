@@ -11,8 +11,11 @@ import ReviewList from '../../components/review-list/review-list';
 import {useEffect} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {setFavoriteAction} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks';
 
 function RoomScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
 
@@ -29,6 +32,11 @@ function RoomScreen(): JSX.Element {
   }
   const {id, title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
+
+  const handleBookmarkButtonClick = () => {
+    const favoriteStatus = isFavorite ? 1 : 0;
+    dispatch(setFavoriteAction({id, favoriteStatus}));
+  };
 
   return (
     <div className="page">
@@ -56,7 +64,11 @@ function RoomScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title} ({city.name})
                 </h1>
-                <button className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active' : ''} button`} type="button">
+                <button
+                  onClick={handleBookmarkButtonClick}
+                  className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active' : ''} button`}
+                  type="button"
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>

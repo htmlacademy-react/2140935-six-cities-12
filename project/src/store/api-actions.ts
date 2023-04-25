@@ -2,7 +2,7 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {Offer} from '../types/offer.js';
-import {loadOffers, loadFavoriteOffers, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {loadOffers, loadFavoriteOffers, setFavoriteStatus, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {store} from './';
@@ -47,6 +47,21 @@ export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
   },
 );
 
+export const setFavoriteAction = createAsyncThunk<void, {
+  favoriteStatus: number;
+  id: number;
+}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/setFavorite',
+  async ({id, favoriteStatus}, {dispatch, extra: api}) => {
+    dispatch(setFavoriteStatus({favoriteStatus}));
+    await api.post(`${APIRoute.Favorites}/${id}/${favoriteStatus}`);
+  },
+);
+
 export const fetchRoomOfferAction = createAsyncThunk<void, number, {
   dispatch: AppDispatch;
   state: State;
@@ -83,7 +98,7 @@ export const postReviewsAction = createAsyncThunk<void, {
 }>(
   'data/sendReview',
   async ({review, id}, {dispatch, extra: api}) => {
-    dispatch(sendReview({comment: '', rating: null}));
+    dispatch(sendReview({comment: '', rating: 0}));
     const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, review);
     dispatch(sendReview(data));
   },
