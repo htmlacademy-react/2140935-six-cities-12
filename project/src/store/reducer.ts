@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffers, loadFavoriteOffers, loadRoom, loadReviews, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {setCurrentCity, loadOffers, loadFavoriteOffers, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
 import {DEFAULT_CITY_NAME, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
 import {Review} from '../types/offer';
@@ -22,6 +22,10 @@ type InitialState = {
     isLoading: boolean;
     data: Review[];
   };
+  sentReview: {
+    comment: string;
+    rating: number | null;
+  };
   nearbyOffers: {
     isLoading: boolean;
     data: Offer[];
@@ -29,7 +33,7 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   userEmail: string;
   error: string | null;
-}
+};
 
 const initialState: InitialState = {
   selectedCity: DEFAULT_CITY_NAME,
@@ -48,6 +52,10 @@ const initialState: InitialState = {
   reviews: {
     isLoading: false,
     data: [],
+  },
+  sentReview: {
+    comment: '',
+    rating: null,
   },
   nearbyOffers: {
     isLoading: false,
@@ -75,6 +83,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(sendReview, (state, action) => {
+      state.sentReview = action.payload;
     })
     .addCase(loadNearby, (state, action) => {
       state.nearbyOffers = action.payload;

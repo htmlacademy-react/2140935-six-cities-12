@@ -10,6 +10,7 @@ import {store} from '../../store';
 import ReviewList from '../../components/review-list/review-list';
 import {useEffect} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function RoomScreen(): JSX.Element {
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
@@ -24,9 +25,9 @@ function RoomScreen(): JSX.Element {
   }, [params.id]);
 
   if (!offer) {
-    return <>Not found</>;
+    return <NotFoundScreen />;
   }
-  const {title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
+  const {id, title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
 
   return (
@@ -111,7 +112,7 @@ function RoomScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewList />
+              <ReviewList roomId={id} />
             </div>
           </div>
           <section className="property__map map">

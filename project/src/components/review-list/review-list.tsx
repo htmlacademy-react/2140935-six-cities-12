@@ -2,9 +2,16 @@ import {useAppSelector} from '../../hooks';
 import Form from '../form/form';
 import ReviewCard from '../review-card/review-card';
 import { getReviews } from '../../store/selectors';
+import {AuthorizationStatus} from '../../const';
+import { getAuthorizationStatus } from '../../store/selectors';
 
-function ReviewList(): JSX.Element {
+type ReviewListProps = {
+  roomId: number;
+};
+
+function ReviewList({roomId}: ReviewListProps): JSX.Element {
   const reviews = useAppSelector(getReviews);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <section className="property__reviews reviews">
@@ -14,7 +21,10 @@ function ReviewList(): JSX.Element {
           <ReviewCard key={item.id} review={item} />
         ))}
       </ul>
-      <Form />
+      {authorizationStatus === AuthorizationStatus.Auth
+        ? (
+          <Form roomId={roomId} />
+        ) : null}
     </section>
   );
 }
