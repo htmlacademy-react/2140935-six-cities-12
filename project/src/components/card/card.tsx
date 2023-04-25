@@ -2,9 +2,6 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {RATIO} from '../../const';
 import {AppRoute} from '../../const';
-import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { setActiveCardId } from '../../store/action';
 
 type CardProps = {
   offer: Offer;
@@ -15,16 +12,9 @@ type CardProps = {
 };
 
 function Card(props: CardProps): JSX.Element {
-  const dispatch = useAppDispatch();
   const {offer, cardType, isActive, onMouseOver, onMouseLeave} = props;
   const {id, title, city, previewImage, isPremium, type, price, rating} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
-
-  useEffect(() => {
-    if (isActive) {
-      dispatch(setActiveCardId({activeCardId: id}));
-    }
-  }, [dispatch, isActive, id]);
 
   return (
     <article

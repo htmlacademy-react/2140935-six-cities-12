@@ -6,8 +6,6 @@ export const getOffersDataLoading = (state: State) => state.allOffers.isLoading;
 
 export const getCurrentCity = (state: State) => state.selectedCity;
 
-export const getActiveCardid = (state: State) => state.activeCardId;
-
 export const getAuthorizationStatus = (state: State) => state.authorizationStatus;
 
 export const getFavoriteOffers = (state: State) => state.favoriteOffers.data;

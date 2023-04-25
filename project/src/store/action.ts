@@ -25,8 +25,6 @@ export type SendReviewPayload = {
 
 export const setCurrentCity = createAction<{selectedCity: string}>('mainScreen/setCurrentCity');
 
-export const setActiveCardId = createAction<{activeCardId: number}>('cards/setActiveCardId');
-
 export const loadOffers = createAction<LoadOffersPayload>('mainScreen/loadOffers');
 
 export const loadFavoriteOffers = createAction<LoadOffersPayload>('favoriteScreen/loadFavoriteOffers');
