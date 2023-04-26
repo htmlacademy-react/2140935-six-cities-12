@@ -7,6 +7,7 @@ import {fetchFavoriteOffersAction} from '../../store/api-actions';
 import {store} from '../../store';
 import {useEffect} from 'react';
 import {getFavoriteOffers} from '../../store/selectors';
+import FavoritesEmptyScreen from '../favorites-empty-screen/favorites-empty-screen';
 
 function FavoritesScreen(): JSX.Element {
 
@@ -15,6 +16,10 @@ function FavoritesScreen(): JSX.Element {
   }, []);
 
   const favoriteOffers = useAppSelector(getFavoriteOffers);
+
+  if (!favoriteOffers[0]) {
+    return <FavoritesEmptyScreen />;
+  }
 
   return (
     <div className="page">

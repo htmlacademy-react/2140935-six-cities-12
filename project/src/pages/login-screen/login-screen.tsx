@@ -66,7 +66,7 @@ function LoginScreen(): JSX.Element {
                 <label className="visually-hidden">E-mail</label>
                 <input
                   className="login__input form__input"
-                  type="text"
+                  type="email"
                   name="name"
                   id="name"
                   placeholder="Email"
@@ -79,7 +79,8 @@ function LoginScreen(): JSX.Element {
                 <label className="visually-hidden">Password</label>
                 <input
                   className="login__input form__input"
-                  type="password"
+                  title="The password must contain at least one letter and one number"
+                  type="text" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
                   name="password"
                   id="password"
                   placeholder="Password"
