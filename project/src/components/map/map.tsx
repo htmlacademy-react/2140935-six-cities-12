@@ -4,12 +4,12 @@ import leaflet from 'leaflet';
 import useMap from '../../hooks/use-map/use-map';
 import {City} from '../../types/city';
 import {Offer} from '../../types/offer';
-import {URL_MARKER_DEFAULT} from '../../const';
+import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 
 type MapProps = {
   city: City;
   offers: Offer[];
-  currentOffer: Offer;
+  currentOffer: Offer | null;
   mapHeight: number;
 }
 
@@ -24,6 +24,11 @@ function Map({city, offers, currentOffer, mapHeight}: MapProps): JSX.Element {
         iconSize: [40, 40],
         iconAnchor: [20, 40],
       });
+      const currentCustomIcon = leaflet.icon({
+        iconUrl: URL_MARKER_CURRENT,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
 
       map.eachLayer((layer) => {
         if (layer instanceof leaflet.Marker) {
@@ -32,17 +37,20 @@ function Map({city, offers, currentOffer, mapHeight}: MapProps): JSX.Element {
       });
 
       offers.forEach((point) => {
+        const isCurrentOffer = currentOffer && point.id === currentOffer.id;
         leaflet
           .marker({
             lat: point.location.latitude,
             lng: point.location.longitude,
           }, {
-            icon: defaultCustomIcon,
+            icon: isCurrentOffer
+              ? currentCustomIcon
+              : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  }, [map, offers, city]);
+  }, [map, offers, city, currentOffer]);
 
   return (
     <div

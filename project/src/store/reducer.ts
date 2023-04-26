@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {setCurrentCity, loadOffers, loadFavoriteOffers, loadRoom, loadReviews, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {setCurrentCity, loadOffers, loadFavoriteOffers, instantAddToFavorite, instantRemoveFromFavorite, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
 import {DEFAULT_CITY_NAME, AuthorizationStatus} from '../const';
 import {Offer} from '../types/offer';
 import {Review} from '../types/offer';
@@ -22,6 +22,13 @@ type InitialState = {
     isLoading: boolean;
     data: Review[];
   };
+  sentReview: {
+    isLoading: boolean;
+    data: {
+      comment: string;
+      rating: number | null;
+    };
+  };
   nearbyOffers: {
     isLoading: boolean;
     data: Offer[];
@@ -29,7 +36,7 @@ type InitialState = {
   authorizationStatus: AuthorizationStatus;
   userEmail: string;
   error: string | null;
-}
+};
 
 const initialState: InitialState = {
   selectedCity: DEFAULT_CITY_NAME,
@@ -48,6 +55,13 @@ const initialState: InitialState = {
   reviews: {
     isLoading: false,
     data: [],
+  },
+  sentReview: {
+    isLoading: false,
+    data: {
+      comment: '',
+      rating: null,
+    }
   },
   nearbyOffers: {
     isLoading: false,
@@ -70,11 +84,26 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFavoriteOffers, (state, action) => {
       state.favoriteOffers = action.payload;
     })
+    .addCase(instantAddToFavorite, (state, action) => {
+      const index = state.favoriteOffers.data.findIndex((item) => item.id === action.payload.id);
+      if (index === -1) {
+        state.favoriteOffers.data = [...state.favoriteOffers.data, action.payload];
+      }
+    })
+    .addCase(instantRemoveFromFavorite, (state, action) => {
+      const index = state.favoriteOffers.data.findIndex((item) => item.id === action.payload.id);
+      if (index !== -1) {
+        state.favoriteOffers.data = state.favoriteOffers.data.filter((item, i) => i !== index);
+      }
+    })
     .addCase(loadRoom, (state, action) => {
       state.room = action.payload;
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;
+    })
+    .addCase(sendReview, (state, action) => {
+      state.sentReview = action.payload;
     })
     .addCase(loadNearby, (state, action) => {
       state.nearbyOffers = action.payload;

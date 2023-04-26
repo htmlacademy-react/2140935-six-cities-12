@@ -1,7 +1,17 @@
 import {Link} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
 import {Offer} from '../../types/offer';
 import {RATIO} from '../../const';
 import {AppRoute} from '../../const';
+import {useAppDispatch} from '../../hooks';
+import {useState} from 'react';
+import {setFavoriteAction} from '../../store/api-actions';
+import {createBrowserHistory} from 'history';
+import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/selectors';
+import {instantAddToFavorite, instantRemoveFromFavorite} from '../../store/action';
+
+const browserHistory = createBrowserHistory();
 
 type CardProps = {
   offer: Offer;
@@ -12,9 +22,29 @@ type CardProps = {
 };
 
 function Card(props: CardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {offer, cardType, isActive, onMouseOver, onMouseLeave} = props;
-  const {id, title, city, previewImage, isPremium, type, price, rating} = offer;
+  const {id, title, city, previewImage, isPremium, type, price, rating, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
+
+  const handleBookmarkButtonClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      browserHistory.push(AppRoute.Login);
+    } else {
+      const favoriteStatus = isFavorite ? 0 : 1;
+      dispatch(setFavoriteAction({id, favoriteStatus}))
+        .then(() => setIsFavoriteFlag(!isFavoriteFlag))
+        .then(() => {
+          if ((isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag)) {
+            dispatch(instantRemoveFromFavorite(offer));
+          } else {
+            dispatch(instantAddToFavorite(offer));
+          }
+        });
+    }
+  };
 
   return (
     <article
@@ -34,9 +64,13 @@ function Card(props: CardProps): JSX.Element {
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night{isActive ? ' - Active' : ''}</span>
+            <span className="place-card__price-text">&#47;&nbsp;night{isActive ? '' : ''}</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            onClick={handleBookmarkButtonClick}
+            className={`place-card__bookmark-button ${(isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag) ? 'place-card__bookmark-button--active' : ''} button`}
+            type="button"
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>

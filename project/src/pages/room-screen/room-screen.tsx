@@ -1,19 +1,36 @@
 import {useParams} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
-import { useAppSelector } from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import Header from '../../components/header/header';
 import CardsListNear from '../../components/cards-list/cards-list-near';
 import {RATIO} from '../../const';
 import Map from '../../components/map/map';
-import {fetchRoomOfferAction, fetchReviewsAction, fetchNearbyAction} from '../../store/api-actions';
+import {fetchRoomOfferAction, fetchReviewsAction, fetchNearbyAction, fetchFavoriteOffersAction} from '../../store/api-actions';
 import {store} from '../../store';
 import ReviewList from '../../components/review-list/review-list';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {setFavoriteAction} from '../../store/api-actions';
+import {useAppDispatch} from '../../hooks';
+import {createBrowserHistory} from 'history';
+import {AppRoute} from '../../const';
+import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/selectors';
+import {instantAddToFavorite, instantRemoveFromFavorite} from '../../store/action';
+
+const browserHistory = createBrowserHistory();
 
 function RoomScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
+
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffersAction());
+  }, [isFavoriteFlag]);
 
   useEffect(() => {
     if (params.id) {
@@ -24,10 +41,28 @@ function RoomScreen(): JSX.Element {
   }, [params.id]);
 
   if (!offer) {
-    return <>Not found</>;
+    return <NotFoundScreen />;
   }
-  const {title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
+
+  const {id, title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
+
+  const handleBookmarkButtonClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      browserHistory.push(AppRoute.Login);
+    } else {
+      const favoriteStatus = isFavorite ? 0 : 1;
+      dispatch(setFavoriteAction({id, favoriteStatus}))
+        .then(() => setIsFavoriteFlag(!isFavoriteFlag))
+        .then(() => {
+          if ((isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag)) {
+            dispatch(instantRemoveFromFavorite(offer));
+          } else {
+            dispatch(instantAddToFavorite(offer));
+          }
+        });
+    }
+  };
 
   return (
     <div className="page">
@@ -55,7 +90,11 @@ function RoomScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title} ({city.name})
                 </h1>
-                <button className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active' : ''} button`} type="button">
+                <button
+                  onClick={handleBookmarkButtonClick}
+                  className={`property__bookmark-button ${(isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag) ? 'property__bookmark-button--active' : ''} button`}
+                  type="button"
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -111,11 +150,11 @@ function RoomScreen(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <ReviewList />
+              <ReviewList roomId={id} />
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={nearbyOffers} currentOffer={offer} mapHeight={580} />
+            <Map city={city} offers={[...nearbyOffers, offer]} currentOffer={offer} mapHeight={580} />
           </section>
         </section>
         <div className="container">

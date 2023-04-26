@@ -18,15 +18,29 @@ type LoadReviewPayload = {
   data: Review[];
 };
 
+export type SendReviewPayload = {
+  isLoading: boolean;
+  data: {
+    comment: string;
+    rating: number | null;
+  };
+};
+
 export const setCurrentCity = createAction<{selectedCity: string}>('mainScreen/setCurrentCity');
 
 export const loadOffers = createAction<LoadOffersPayload>('mainScreen/loadOffers');
 
 export const loadFavoriteOffers = createAction<LoadOffersPayload>('favoriteScreen/loadFavoriteOffers');
 
+export const instantAddToFavorite = createAction<Offer>('favoriteScreen/instantAddOffer');
+
+export const instantRemoveFromFavorite = createAction<Offer>('favoriteScreen/instantSubtractOffer');
+
 export const loadRoom = createAction<LoadRoomPayload>('roomScreen/loadRoom');
 
 export const loadReviews = createAction<LoadReviewPayload>('roomScreen/loadReviews');
+
+export const sendReview = createAction<SendReviewPayload>('data/sendReview');
 
 export const loadNearby = createAction<LoadOffersPayload>('roomScreen/loadNearby');
 

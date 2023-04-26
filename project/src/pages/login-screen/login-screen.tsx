@@ -7,6 +7,8 @@ import {AuthData} from '../../types/auth-data';
 import {AppRoute} from '../../const';
 import Logo from '../../components/logo/logo';
 import {getAuthorizationStatus} from '../../store/selectors';
+import {AuthorizationStatus} from '../../const';
+import RandomCity from '../../components/random-city/random-city';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,7 +18,7 @@ function LoginScreen(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    if (authorizationStatus === 'AUTH') {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [authorizationStatus, navigate]);
@@ -64,7 +66,7 @@ function LoginScreen(): JSX.Element {
                 <label className="visually-hidden">E-mail</label>
                 <input
                   className="login__input form__input"
-                  type="text"
+                  type="email"
                   name="name"
                   id="name"
                   placeholder="Email"
@@ -77,7 +79,8 @@ function LoginScreen(): JSX.Element {
                 <label className="visually-hidden">Password</label>
                 <input
                   className="login__input form__input"
-                  type="password"
+                  title="The password must contain at least one letter and one number"
+                  type="text" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
                   name="password"
                   id="password"
                   placeholder="Password"
@@ -89,13 +92,7 @@ function LoginScreen(): JSX.Element {
               <button className="login__submit form__submit button" type="submit">Sign in</button>
             </form>
           </section>
-          <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
-              </a>
-            </div>
-          </section>
+          <RandomCity />
         </div>
       </main>
     </div>

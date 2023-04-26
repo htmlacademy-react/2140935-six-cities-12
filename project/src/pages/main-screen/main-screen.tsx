@@ -5,17 +5,29 @@ import Map from '../../components/map/map';
 import CityList from '../../components/city-list/city-list';
 import {useAppSelector} from '../../hooks';
 import {getOffers, getCurrentCity} from '../../store/selectors';
+import {useState} from 'react';
+import {Offer} from '../../types/offer';
+import NoPlacesScreen from '../no-places/no-places-screen';
 
 function MainScreen(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const currentCityName = useAppSelector(getCurrentCity);
   const mainOffers = offers.filter((offer) => offer.city.name === currentCityName);
   const {city} = mainOffers[0];
-  const offer = mainOffers[0];
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
   if (!mainOffers[0]) {
-    return <>Not found</>;
+    return <NoPlacesScreen />;
   }
+
+  const handleActiveCardIdChange = (id: number | null) => {
+    if (id === null) {
+      setActiveOffer(null);
+    } else {
+      const newActiveOffer = mainOffers.find((offer) => offer.id === id) || null;
+      setActiveOffer(newActiveOffer);
+    }
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -29,10 +41,10 @@ function MainScreen(): JSX.Element {
         <CityList />
         <div className="cities">
           <div className="cities__places-container container">
-            <CardsListMain offers={mainOffers} city={currentCityName} />
+            <CardsListMain offers={mainOffers} city={currentCityName} onActiveCardIdChange={handleActiveCardIdChange} />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} offers={mainOffers} currentOffer={offer} mapHeight={800} />
+                <Map city={city} offers={mainOffers} currentOffer={activeOffer} mapHeight={800} />
               </section>
             </div>
           </div>

@@ -11,6 +11,9 @@ function ReviewCard({review}: ReviewProps): JSX.Element {
   }
   const {user, rating, comment, date} = review;
   const ratePercent = rating * RATIO;
+  const newDate = new Date(date);
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long' };
+  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(newDate);
 
   return (
     <li className="reviews__item">
@@ -32,7 +35,7 @@ function ReviewCard({review}: ReviewProps): JSX.Element {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime="2019-04-24">{formattedDate}</time>
       </div>
     </li>
   );

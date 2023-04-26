@@ -2,7 +2,7 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {Offer} from '../types/offer.js';
-import {loadOffers, loadFavoriteOffers, loadRoom, loadReviews, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {loadOffers, loadFavoriteOffers, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {store} from './';
@@ -28,8 +28,13 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(loadOffers({isLoading: true, data: []}));
-    const {data} = await api.get<Offer[]>(APIRoute.Offers);
-    dispatch(loadOffers({isLoading: false, data}));
+    try {
+      const {data} = await api.get<Offer[]>(APIRoute.Offers);
+      dispatch(loadOffers({isLoading: false, data}));
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
   },
 );
 
@@ -41,8 +46,32 @@ export const fetchFavoriteOffersAction = createAsyncThunk<void, undefined, {
   'data/fetchFavoriteOffers',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(loadFavoriteOffers({isLoading: true, data: []}));
-    const {data} = await api.get<Offer[]>(APIRoute.Favorites);
-    dispatch(loadFavoriteOffers({isLoading: false, data}));
+    try {
+      const {data} = await api.get<Offer[]>(APIRoute.Favorites);
+      dispatch(loadFavoriteOffers({isLoading: false, data}));
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
+  },
+);
+
+export const setFavoriteAction = createAsyncThunk<void, {
+  favoriteStatus: number;
+  id: number;
+}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/setFavorite',
+  async ({id, favoriteStatus}, {dispatch, extra: api}) => {
+    try {
+      await api.post(`${APIRoute.Favorites}/${id}/${favoriteStatus}`);
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
   },
 );
 
@@ -54,8 +83,13 @@ export const fetchRoomOfferAction = createAsyncThunk<void, number, {
   'data/fetchRoom',
   async (id, {dispatch, extra: api}) => {
     dispatch(loadRoom({isLoading: true, data: null}));
-    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-    dispatch(loadRoom({isLoading: false, data}));
+    try {
+      const {data} = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      dispatch(loadRoom({isLoading: false, data}));
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
   },
 );
 
@@ -67,8 +101,36 @@ export const fetchReviewsAction = createAsyncThunk<void, number, {
   'data/fetchReviews',
   async (id, {dispatch, extra: api}) => {
     dispatch(loadReviews({isLoading: true, data: []}));
-    const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
-    dispatch(loadReviews({isLoading: false, data}));
+    try {
+      const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${id}`);
+      dispatch(loadReviews({isLoading: false, data}));
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
+  },
+);
+
+export const postReviewsAction = createAsyncThunk<void, {
+  data: {
+    comment: string;
+    rating: number | null;
+  };
+  id: number;
+}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/sendReview',
+  async ({data: payload, id}, {dispatch, extra: api}) => {
+    try {
+      const {data: responseData} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, payload);
+      dispatch(sendReview({isLoading: false, data: responseData}));
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
   },
 );
 
@@ -80,8 +142,13 @@ export const fetchNearbyAction = createAsyncThunk<void, number, {
   'data/fetchNearby',
   async (id, {dispatch, extra: api}) => {
     dispatch(loadNearby({isLoading: true, data: []}));
-    const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
-    dispatch(loadNearby({isLoading: false, data}));
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      dispatch(loadNearby({isLoading: false, data}));
+    } catch (error) {
+      dispatch(setError('Error connection to the server'));
+      throw error;
+    }
   },
 );
 
