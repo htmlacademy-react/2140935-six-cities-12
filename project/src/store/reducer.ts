@@ -85,10 +85,16 @@ const reducer = createReducer(initialState, (builder) => {
       state.favoriteOffers = action.payload;
     })
     .addCase(instantAddToFavorite, (state, action) => {
-      state.favoriteOffers.data = [...state.favoriteOffers.data, action.payload];
+      const index = state.favoriteOffers.data.findIndex((item) => item.id === action.payload.id);
+      if (index === -1) {
+        state.favoriteOffers.data = [...state.favoriteOffers.data, action.payload];
+      }
     })
     .addCase(instantRemoveFromFavorite, (state, action) => {
-      state.favoriteOffers.data = state.favoriteOffers.data.filter((item) => item !== action.payload);
+      const index = state.favoriteOffers.data.findIndex((item) => item.id === action.payload.id);
+      if (index !== -1) {
+        state.favoriteOffers.data = state.favoriteOffers.data.filter((item, i) => i !== index);
+      }
     })
     .addCase(loadRoom, (state, action) => {
       state.room = action.payload;
