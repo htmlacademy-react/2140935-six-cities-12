@@ -2,7 +2,7 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {Offer} from '../types/offer.js';
-import {loadOffers, loadFavoriteOffers, setFavoriteStatus, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
+import {loadOffers, loadFavoriteOffers, loadRoom, loadReviews, sendReview, loadNearby, requireAuthorization, setUserEmail, setError} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {store} from './';
@@ -57,7 +57,6 @@ export const setFavoriteAction = createAsyncThunk<void, {
 }>(
   'data/setFavorite',
   async ({id, favoriteStatus}, {dispatch, extra: api}) => {
-    dispatch(setFavoriteStatus({favoriteStatus}));
     await api.post(`${APIRoute.Favorites}/${id}/${favoriteStatus}`);
   },
 );

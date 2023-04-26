@@ -8,7 +8,7 @@ import Map from '../../components/map/map';
 import {fetchRoomOfferAction, fetchReviewsAction, fetchNearbyAction} from '../../store/api-actions';
 import {store} from '../../store';
 import ReviewList from '../../components/review-list/review-list';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {setFavoriteAction} from '../../store/api-actions';
@@ -16,6 +16,7 @@ import {useAppDispatch} from '../../hooks';
 
 function RoomScreen(): JSX.Element {
   const dispatch = useAppDispatch();
+  const [isFavoriteLocal, setIsFavoriteLocal] = useState(false);
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
 
@@ -30,12 +31,15 @@ function RoomScreen(): JSX.Element {
   if (!offer) {
     return <NotFoundScreen />;
   }
+
   const {id, title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
+  setIsFavoriteLocal(isFavorite);
 
   const handleBookmarkButtonClick = () => {
     const favoriteStatus = isFavorite ? 0 : 1;
     dispatch(setFavoriteAction({id, favoriteStatus}));
+    setIsFavoriteLocal(!setIsFavoriteLocal);
   };
 
   return (
@@ -66,7 +70,7 @@ function RoomScreen(): JSX.Element {
                 </h1>
                 <button
                   onClick={handleBookmarkButtonClick}
-                  className={`property__bookmark-button ${isFavorite ? 'property__bookmark-button--active' : ''} button`}
+                  className={`property__bookmark-button ${isFavoriteLocal ? 'property__bookmark-button--active' : ''} button`}
                   type="button"
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
