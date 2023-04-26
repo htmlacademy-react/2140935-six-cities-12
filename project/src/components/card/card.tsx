@@ -64,7 +64,7 @@ function Card(props: CardProps): JSX.Element {
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night{isActive ? ' - Active' : ''}</span>
+            <span className="place-card__price-text">&#47;&nbsp;night{isActive ? '' : ''}</span>
           </div>
           <button
             onClick={handleBookmarkButtonClick}
