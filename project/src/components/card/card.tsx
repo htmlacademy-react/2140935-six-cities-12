@@ -38,7 +38,7 @@ function Card(props: CardProps): JSX.Element {
       const favoriteStatus = isFavorite ? 0 : 1;
       dispatch(setFavoriteAction({id, favoriteStatus}))
         .then(() => setIsFavoriteFlag(!isFavoriteFlag))
-        .then(() => store.dispatch(instantAddToFavorite(offer)));
+        .then(() => dispatch(instantAddToFavorite(offer)));
     }
   };
 
