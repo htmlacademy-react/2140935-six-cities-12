@@ -11,6 +11,7 @@ import {AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/selectors';
 import {useEffect} from 'react';
 import {store} from '../../store';
+import {instantAddToFavorite} from '../../store/action';
 
 const browserHistory = createBrowserHistory();
 
@@ -36,7 +37,8 @@ function Card(props: CardProps): JSX.Element {
     } else {
       const favoriteStatus = isFavorite ? 0 : 1;
       dispatch(setFavoriteAction({id, favoriteStatus}))
-        .then(() => setIsFavoriteFlag(!isFavoriteFlag));
+        .then(() => setIsFavoriteFlag(!isFavoriteFlag))
+        .then(() => store.dispatch(instantAddToFavorite(offer)));
     }
   };
 

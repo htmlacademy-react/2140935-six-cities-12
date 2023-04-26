@@ -32,6 +32,8 @@ export const loadOffers = createAction<LoadOffersPayload>('mainScreen/loadOffers
 
 export const loadFavoriteOffers = createAction<LoadOffersPayload>('favoriteScreen/loadFavoriteOffers');
 
+export const instantAddToFavorite = createAction<Offer>('favoriteScreen/instantAddOffer');
+
 export const loadRoom = createAction<LoadRoomPayload>('roomScreen/loadRoom');
 
 export const loadReviews = createAction<LoadReviewPayload>('roomScreen/loadReviews');

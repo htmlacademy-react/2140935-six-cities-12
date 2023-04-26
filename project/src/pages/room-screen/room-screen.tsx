@@ -17,6 +17,7 @@ import {createBrowserHistory} from 'history';
 import {AppRoute} from '../../const';
 import {AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/selectors';
+import {instantAddToFavorite} from '../../store/action';
 
 const browserHistory = createBrowserHistory();
 
@@ -53,7 +54,7 @@ function RoomScreen(): JSX.Element {
       const favoriteStatus = isFavorite ? 0 : 1;
       dispatch(setFavoriteAction({id, favoriteStatus}))
         .then(() => setIsFavoriteFlag(!isFavoriteFlag))
-        .then(() => store.dispatch(fetchFavoriteOffersAction()));
+        .then(() => store.dispatch(instantAddToFavorite(offer)));
     }
   };
 
