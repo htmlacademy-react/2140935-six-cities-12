@@ -5,18 +5,19 @@ import Map from '../../components/map/map';
 import CityList from '../../components/city-list/city-list';
 import {useAppSelector} from '../../hooks';
 import {getOffers, getCurrentCity} from '../../store/selectors';
-import { useState } from 'react';
-import { Offer } from '../../types/offer';
+import {useState} from 'react';
+import {Offer} from '../../types/offer';
+import NoPlacesScreen from '../no-places/no-places-screen';
 
 function MainScreen(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const currentCityName = useAppSelector(getCurrentCity);
   const mainOffers = offers.filter((offer) => offer.city.name === currentCityName);
   const {city} = mainOffers[0];
-  const [activeOffer, setActiveOffer] = useState<Offer | null>(mainOffers[0]);
+  const [activeOffer, setActiveOffer] = useState<Offer | null>(null);
 
   if (!mainOffers[0]) {
-    return <>Not found</>;
+    return <NoPlacesScreen />;
   }
 
   const handleActiveCardIdChange = (id: number | null) => {

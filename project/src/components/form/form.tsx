@@ -29,7 +29,8 @@ function Form({roomId}: FormProps): JSX.Element {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(postReviewsAction({review: state, id: roomId}));
+    dispatch(postReviewsAction({review: state, id: roomId}))
+      .then(() => setState({comment: '', rating: 0}));
   };
 
   return (

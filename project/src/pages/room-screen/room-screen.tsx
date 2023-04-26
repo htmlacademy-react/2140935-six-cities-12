@@ -1,6 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
-import { useAppSelector } from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import Header from '../../components/header/header';
 import CardsListNear from '../../components/cards-list/cards-list-near';
 import {RATIO} from '../../const';
