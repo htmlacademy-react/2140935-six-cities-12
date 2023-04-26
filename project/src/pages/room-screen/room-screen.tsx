@@ -16,7 +16,7 @@ import {useAppDispatch} from '../../hooks';
 
 function RoomScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const [isFavoriteLocal, setIsFavoriteLocal] = useState(false);
+  const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
 
@@ -34,12 +34,11 @@ function RoomScreen(): JSX.Element {
 
   const {id, title, description, images, rating, isPremium, type, goods, bedrooms, maxAdults, price, host, city, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
-  setIsFavoriteLocal(isFavorite);
 
   const handleBookmarkButtonClick = () => {
     const favoriteStatus = isFavorite ? 0 : 1;
-    dispatch(setFavoriteAction({id, favoriteStatus}));
-    setIsFavoriteLocal(!setIsFavoriteLocal);
+    dispatch(setFavoriteAction({id, favoriteStatus}))
+      .then(() => setIsFavoriteFlag(!isFavoriteFlag));
   };
 
   return (
@@ -70,7 +69,7 @@ function RoomScreen(): JSX.Element {
                 </h1>
                 <button
                   onClick={handleBookmarkButtonClick}
-                  className={`property__bookmark-button ${isFavoriteLocal ? 'property__bookmark-button--active' : ''} button`}
+                  className={`property__bookmark-button ${(isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag) ? 'property__bookmark-button--active' : ''} button`}
                   type="button"
                 >
                   <svg className="property__bookmark-icon" width="31" height="33">
