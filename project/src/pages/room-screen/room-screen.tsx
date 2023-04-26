@@ -11,14 +11,25 @@ import ReviewList from '../../components/review-list/review-list';
 import {useEffect, useState} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {setFavoriteAction} from '../../store/api-actions';
+import {setFavoriteAction, fetchFavoriteOffersAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';
+import {createBrowserHistory} from 'history';
+import {AppRoute} from '../../const';
+import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/selectors';
+
+const browserHistory = createBrowserHistory();
 
 function RoomScreen(): JSX.Element {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
+
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffersAction());
+  }, [isFavoriteFlag]);
 
   useEffect(() => {
     if (params.id) {
@@ -36,9 +47,14 @@ function RoomScreen(): JSX.Element {
   const ratePercent = parseFloat(rating) * RATIO;
 
   const handleBookmarkButtonClick = () => {
-    const favoriteStatus = isFavorite ? 0 : 1;
-    dispatch(setFavoriteAction({id, favoriteStatus}))
-      .then(() => setIsFavoriteFlag(!isFavoriteFlag));
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      browserHistory.push(AppRoute.Login);
+    } else {
+      const favoriteStatus = isFavorite ? 0 : 1;
+      dispatch(setFavoriteAction({id, favoriteStatus}))
+        .then(() => setIsFavoriteFlag(!isFavoriteFlag))
+        .then(() => store.dispatch(fetchFavoriteOffersAction()));
+    }
   };
 
   return (

@@ -3,6 +3,7 @@ import {createBrowserHistory} from 'history';
 import {setCurrentCity} from '../../store/action';
 import {Link} from 'react-router-dom';
 import {getRandomCity} from './utils';
+import {AppRoute} from '../../const';
 
 const browserHistory = createBrowserHistory();
 
@@ -12,7 +13,7 @@ function RandomCity(): JSX.Element {
 
   const handleCityClick = () => {
     dispatch(setCurrentCity({selectedCity: randomCity}));
-    browserHistory.push('/');
+    browserHistory.push(AppRoute.Root);
   };
 
   return (

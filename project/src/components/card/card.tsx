@@ -1,10 +1,18 @@
 import {Link} from 'react-router-dom';
+import {useAppSelector} from '../../hooks';
 import {Offer} from '../../types/offer';
 import {RATIO} from '../../const';
 import {AppRoute} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {useState} from 'react';
-import {setFavoriteAction} from '../../store/api-actions';
+import {setFavoriteAction, fetchFavoriteOffersAction} from '../../store/api-actions';
+import {createBrowserHistory} from 'history';
+import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/selectors';
+import {useEffect} from 'react';
+import {store} from '../../store';
+
+const browserHistory = createBrowserHistory();
 
 type CardProps = {
   offer: Offer;
@@ -16,16 +24,25 @@ type CardProps = {
 
 function Card(props: CardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {offer, cardType, isActive, onMouseOver, onMouseLeave} = props;
   const {id, title, city, previewImage, isPremium, type, price, rating, isFavorite} = offer;
   const ratePercent = parseFloat(rating) * RATIO;
 
   const handleBookmarkButtonClick = () => {
-    const favoriteStatus = isFavorite ? 0 : 1;
-    dispatch(setFavoriteAction({id, favoriteStatus}))
-      .then(() => setIsFavoriteFlag(!isFavoriteFlag));
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      browserHistory.push(AppRoute.Login);
+    } else {
+      const favoriteStatus = isFavorite ? 0 : 1;
+      dispatch(setFavoriteAction({id, favoriteStatus}))
+        .then(() => setIsFavoriteFlag(!isFavoriteFlag));
+    }
   };
+
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffersAction());
+  }, [isFavoriteFlag]);
 
   return (
     <article
