@@ -11,7 +11,7 @@ import ReviewList from '../../components/review-list/review-list';
 import {useEffect, useState} from 'react';
 import {getRoomAndNearby} from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {setFavoriteAction, fetchFavoriteOffersAction} from '../../store/api-actions';
+import {setFavoriteAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';
 import {createBrowserHistory} from 'history';
 import {AppRoute} from '../../const';
@@ -27,10 +27,6 @@ function RoomScreen(): JSX.Element {
   const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
-
-  useEffect(() => {
-    store.dispatch(fetchFavoriteOffersAction());
-  }, [isFavoriteFlag]);
 
   useEffect(() => {
     if (params.id) {

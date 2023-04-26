@@ -5,12 +5,10 @@ import {RATIO} from '../../const';
 import {AppRoute} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {useState} from 'react';
-import {setFavoriteAction, fetchFavoriteOffersAction} from '../../store/api-actions';
+import {setFavoriteAction} from '../../store/api-actions';
 import {createBrowserHistory} from 'history';
 import {AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/selectors';
-import {useEffect} from 'react';
-import {store} from '../../store';
 import {instantAddToFavorite} from '../../store/action';
 
 const browserHistory = createBrowserHistory();
@@ -41,10 +39,6 @@ function Card(props: CardProps): JSX.Element {
         .then(() => dispatch(instantAddToFavorite(offer)));
     }
   };
-
-  useEffect(() => {
-    store.dispatch(fetchFavoriteOffersAction());
-  }, [isFavoriteFlag]);
 
   return (
     <article
