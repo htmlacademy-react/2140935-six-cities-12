@@ -70,3 +70,16 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export enum SortOption {
+  PRICE_LOW_TO_HIGH = 'Price: low to high',
+  PRICE_HIGH_TO_LOW = 'Price: high to low',
+  TOP_RATED_FIRST = 'Top rated first',
+}
+
+export enum SortOptionsList {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}

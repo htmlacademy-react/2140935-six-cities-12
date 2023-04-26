@@ -1,14 +1,14 @@
 import {useDispatch} from 'react-redux';
-import {CITIES_NAMES} from '../../const';
 import {createBrowserHistory} from 'history';
 import {setCurrentCity} from '../../store/action';
 import {Link} from 'react-router-dom';
+import {getRandomCity} from './utils';
 
 const browserHistory = createBrowserHistory();
 
 function RandomCity(): JSX.Element {
   const dispatch = useDispatch();
-  const randomCity = (CITIES_NAMES[Math.floor(Math.random() * CITIES_NAMES.length)]);
+  const randomCity = getRandomCity();
 
   const handleCityClick = () => {
     dispatch(setCurrentCity({selectedCity: randomCity}));

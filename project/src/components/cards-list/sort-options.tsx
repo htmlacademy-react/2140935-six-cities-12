@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {SortOptionsList} from '../../const';
 
 type SortOptionProps = {
   sortBy: string;
@@ -8,17 +9,13 @@ type SortOptionProps = {
 type OptionClickHandler = (option: string) => void;
 
 function SortOptions({sortBy, onChange }: SortOptionProps): JSX.Element {
-  const sortOptions = [
-    'Popular',
-    'Price: low to high',
-    'Price: high to low',
-    'Top rated first',
-  ];
+
+  const sortOptions = Object.values(SortOptionsList);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClick: OptionClickHandler = (option) => {
-    setIsOpen(false);
+    handleMenuClose();
     onChange(option);
   };
 

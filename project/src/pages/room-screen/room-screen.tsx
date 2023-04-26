@@ -34,7 +34,7 @@ function RoomScreen(): JSX.Element {
   const ratePercent = parseFloat(rating) * RATIO;
 
   const handleBookmarkButtonClick = () => {
-    const favoriteStatus = isFavorite ? 1 : 0;
+    const favoriteStatus = isFavorite ? 0 : 1;
     dispatch(setFavoriteAction({id, favoriteStatus}));
   };
 

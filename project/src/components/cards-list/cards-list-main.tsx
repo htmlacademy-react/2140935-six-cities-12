@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {Offer} from '../../types/offer';
 import Card from '../card/card';
 import SortOptions from './sort-options';
+import {sortOffers} from './utils';
 
 type CardsListMainProps = {
   offers: Offer[];
@@ -18,20 +19,7 @@ function CardsListMain({offers, city, onActiveCardIdChange}: CardsListMainProps)
     setSortBy(option);
   }
 
-  function sortOffers(a: Offer, b: Offer) {
-    switch (sortBy) {
-      case 'Price: low to high':
-        return a.price - b.price;
-      case 'Price: high to low':
-        return b.price - a.price;
-      case 'Top rated first':
-        return parseInt(b.rating, 10) - parseInt(a.rating, 10);
-      default:
-        return 0;
-    }
-  }
-
-  const actualOffers = [...offers].sort(sortOffers);
+  const actualOffers = [...offers].sort(sortOffers(sortBy));
 
   const onMouseOver = (id: number) => {
     setActiveCardId(id);

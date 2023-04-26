@@ -19,14 +19,14 @@ function MainScreen(): JSX.Element {
     return <>Not found</>;
   }
 
-  function handleActiveCardIdChange(id: number | null) {
+  const handleActiveCardIdChange = (id: number | null) => {
     if (id === null) {
       setActiveOffer(null);
     } else {
       const newActiveOffer = mainOffers.find((offer) => offer.id === id) || null;
       setActiveOffer(newActiveOffer);
     }
-  }
+  };
 
   return (
     <div className="page page--gray page--main">
