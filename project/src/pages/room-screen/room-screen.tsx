@@ -5,7 +5,7 @@ import Header from '../../components/header/header';
 import CardsListNear from '../../components/cards-list/cards-list-near';
 import {RATIO} from '../../const';
 import Map from '../../components/map/map';
-import {fetchRoomOfferAction, fetchReviewsAction, fetchNearbyAction} from '../../store/api-actions';
+import {fetchRoomOfferAction, fetchReviewsAction, fetchNearbyAction, fetchFavoriteOffersAction} from '../../store/api-actions';
 import {store} from '../../store';
 import ReviewList from '../../components/review-list/review-list';
 import {useEffect, useState} from 'react';
@@ -17,7 +17,7 @@ import {createBrowserHistory} from 'history';
 import {AppRoute} from '../../const';
 import {AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/selectors';
-import {instantAddToFavorite} from '../../store/action';
+import {instantAddToFavorite, instantRemoveFromFavorite} from '../../store/action';
 
 const browserHistory = createBrowserHistory();
 
@@ -27,6 +27,10 @@ function RoomScreen(): JSX.Element {
   const [isFavoriteFlag, setIsFavoriteFlag] = useState(false);
   const {roomOffer: offer, nearbyOffers} = useAppSelector(getRoomAndNearby);
   const params = useParams();
+
+  useEffect(() => {
+    store.dispatch(fetchFavoriteOffersAction());
+  }, [isFavoriteFlag]);
 
   useEffect(() => {
     if (params.id) {
@@ -50,7 +54,13 @@ function RoomScreen(): JSX.Element {
       const favoriteStatus = isFavorite ? 0 : 1;
       dispatch(setFavoriteAction({id, favoriteStatus}))
         .then(() => setIsFavoriteFlag(!isFavoriteFlag))
-        .then(() => dispatch(instantAddToFavorite(offer)));
+        .then(() => {
+          if ((isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag)) {
+            dispatch(instantRemoveFromFavorite(offer));
+          } else {
+            dispatch(instantAddToFavorite(offer));
+          }
+        });
     }
   };
 

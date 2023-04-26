@@ -9,7 +9,7 @@ import {setFavoriteAction} from '../../store/api-actions';
 import {createBrowserHistory} from 'history';
 import {AuthorizationStatus} from '../../const';
 import {getAuthorizationStatus} from '../../store/selectors';
-import {instantAddToFavorite} from '../../store/action';
+import {instantAddToFavorite, instantRemoveFromFavorite} from '../../store/action';
 
 const browserHistory = createBrowserHistory();
 
@@ -36,7 +36,13 @@ function Card(props: CardProps): JSX.Element {
       const favoriteStatus = isFavorite ? 0 : 1;
       dispatch(setFavoriteAction({id, favoriteStatus}))
         .then(() => setIsFavoriteFlag(!isFavoriteFlag))
-        .then(() => dispatch(instantAddToFavorite(offer)));
+        .then(() => {
+          if ((isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag)) {
+            dispatch(instantRemoveFromFavorite(offer));
+          } else {
+            dispatch(instantAddToFavorite(offer));
+          }
+        });
     }
   };
 
