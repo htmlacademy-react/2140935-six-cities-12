@@ -12,6 +12,8 @@ export const getFavoriteOffers = (state: State) => state.favoriteOffers.data;
 
 export const getReviews = (state: State) => state.reviews.data;
 
+export const getIsLoadingReview = (state: State) => state.sentReview.isLoading;
+
 export const getRoomAndNearby = function(state: State) {
   return {
     roomOffer: state.room.data,

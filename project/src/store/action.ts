@@ -19,8 +19,11 @@ type LoadReviewPayload = {
 };
 
 export type SendReviewPayload = {
+  isLoading: boolean;
+  data: {
     comment: string;
     rating: number | null;
+  };
 };
 
 export const setCurrentCity = createAction<{selectedCity: string}>('mainScreen/setCurrentCity');

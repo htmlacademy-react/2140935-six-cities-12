@@ -23,8 +23,11 @@ type InitialState = {
     data: Review[];
   };
   sentReview: {
-    comment: string;
-    rating: number | null;
+    isLoading: boolean;
+    data: {
+      comment: string;
+      rating: number | null;
+    };
   };
   nearbyOffers: {
     isLoading: boolean;
@@ -54,8 +57,11 @@ const initialState: InitialState = {
     data: [],
   },
   sentReview: {
-    comment: '',
-    rating: null,
+    isLoading: false,
+    data: {
+      comment: '',
+      rating: null,
+    }
   },
   nearbyOffers: {
     isLoading: false,

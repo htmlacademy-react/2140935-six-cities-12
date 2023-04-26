@@ -9,7 +9,6 @@ import {store} from './';
 import {Review} from '../types/offer.js';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
-import { SendReviewPayload } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'data/clearError',
@@ -113,7 +112,10 @@ export const fetchReviewsAction = createAsyncThunk<void, number, {
 );
 
 export const postReviewsAction = createAsyncThunk<void, {
-  review: SendReviewPayload;
+  data: {
+    comment: string;
+    rating: number | null;
+  };
   id: number;
 }, {
   dispatch: AppDispatch;
@@ -121,11 +123,10 @@ export const postReviewsAction = createAsyncThunk<void, {
   extra: AxiosInstance;
 }>(
   'data/sendReview',
-  async ({review, id}, {dispatch, extra: api}) => {
-    dispatch(sendReview({comment: '', rating: 0}));
+  async ({data: payload, id}, {dispatch, extra: api}) => {
     try {
-      const {data} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, review);
-      dispatch(sendReview(data));
+      const {data: responseData} = await api.post<Review>(`${APIRoute.Reviews}/${id}`, payload);
+      dispatch(sendReview({isLoading: false, data: responseData}));
     } catch (error) {
       dispatch(setError('Error connection to the server'));
       throw error;
