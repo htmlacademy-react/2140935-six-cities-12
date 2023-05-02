@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import {useAppSelector} from '../../hooks';
 import Header from '../../components/header/header';
@@ -29,8 +29,10 @@ function RoomScreen(): JSX.Element {
   const params = useParams();
 
   useEffect(() => {
-    store.dispatch(fetchFavoriteOffersAction());
-  }, [isFavoriteFlag]);
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      store.dispatch(fetchFavoriteOffersAction());
+    }
+  }, [authorizationStatus, isFavoriteFlag]);
 
   useEffect(() => {
     if (params.id) {
@@ -90,16 +92,29 @@ function RoomScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title} ({city.name})
                 </h1>
-                <button
-                  onClick={handleBookmarkButtonClick}
-                  className={`property__bookmark-button ${(isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag) ? 'property__bookmark-button--active' : ''} button`}
-                  type="button"
-                >
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                {authorizationStatus !== AuthorizationStatus.Auth ?
+                  <Link to={AppRoute.Login}>
+                    <button
+                      onClick={handleBookmarkButtonClick}
+                      className={`property__bookmark-button ${(isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag) ? 'property__bookmark-button--active' : ''} button`}
+                      type="button"
+                    >
+                      <svg className="property__bookmark-icon" width="31" height="33">
+                        <use xlinkHref="#icon-bookmark" />
+                      </svg>
+                      <span className="visually-hidden">To bookmarks</span>
+                    </button>
+                  </Link> :
+                  <button
+                    onClick={handleBookmarkButtonClick}
+                    className={`property__bookmark-button ${(isFavorite && !isFavoriteFlag) || (!isFavorite && isFavoriteFlag) ? 'property__bookmark-button--active' : ''} button`}
+                    type="button"
+                  >
+                    <svg className="property__bookmark-icon" width="31" height="33">
+                      <use xlinkHref="#icon-bookmark" />
+                    </svg>
+                    <span className="visually-hidden">To bookmarks</span>
+                  </button>}
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -154,7 +169,7 @@ function RoomScreen(): JSX.Element {
             </div>
           </div>
           <section className="property__map map">
-            <Map city={city} offers={[...nearbyOffers, offer]} currentOffer={offer} mapHeight={580} />
+            <Map city={city} offers={[...nearbyOffers, offer]} currentOffer={offer} mapHeight={'580px'} />
           </section>
         </section>
         <div className="container">

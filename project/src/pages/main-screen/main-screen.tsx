@@ -44,7 +44,7 @@ function MainScreen(): JSX.Element {
             <CardsListMain offers={mainOffers} city={currentCityName} onActiveCardIdChange={handleActiveCardIdChange} />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} offers={mainOffers} currentOffer={activeOffer} mapHeight={800} />
+                <Map city={city} offers={mainOffers} currentOffer={activeOffer} mapHeight={'100%'} />
               </section>
             </div>
           </div>
