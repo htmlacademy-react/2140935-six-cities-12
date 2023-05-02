@@ -23,17 +23,12 @@ function LoginScreen(): JSX.Element {
     }
   }, [authorizationStatus, navigate]);
 
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
-
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({
-      login,
-      password,
-    });
-    navigate(AppRoute.Root);
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      const authData: AuthData = { login, password };
+      dispatch(loginAction(authData));
+    }
   };
 
   const handleLoginChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +61,7 @@ function LoginScreen(): JSX.Element {
                 <label className="visually-hidden">E-mail</label>
                 <input
                   className="login__input form__input"
-                  type="email"
+                  type="text" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                   name="name"
                   id="name"
                   placeholder="Email"
@@ -80,7 +75,7 @@ function LoginScreen(): JSX.Element {
                 <input
                   className="login__input form__input"
                   title="The password must contain at least one letter and one number"
-                  type="text" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
+                  type="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$"
                   name="password"
                   id="password"
                   placeholder="Password"

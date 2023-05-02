@@ -10,7 +10,7 @@ type MapProps = {
   city: City;
   offers: Offer[];
   currentOffer: Offer | null;
-  mapHeight: number;
+  mapHeight: string;
 }
 
 function Map({city, offers, currentOffer, mapHeight}: MapProps): JSX.Element {
@@ -54,7 +54,7 @@ function Map({city, offers, currentOffer, mapHeight}: MapProps): JSX.Element {
 
   return (
     <div
-      style={{height: `${mapHeight}px`}}
+      style={{height: `${mapHeight}`}}
       ref={mapRef}
     >
     </div>

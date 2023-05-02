@@ -159,10 +159,16 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      try {
+        await api.get(APIRoute.Login);
+        dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      } catch {
+        dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      }
+    } else {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },

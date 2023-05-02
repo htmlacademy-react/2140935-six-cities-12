@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, Fragment} from 'react';
 import {STARS} from '../../const';
 import {postReviewsAction} from '../../store/api-actions';
 import {useAppDispatch} from '../../hooks';
@@ -62,14 +62,14 @@ function Form({roomId}: FormProps): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {starsValue.map((item) => (
-          <>
+          <Fragment key={item}>
             <input name="rating" key={item} onChange={handleChange} className="form__rating-input visually-hidden" value={item} id={`${item}-stars`} type="radio" disabled={isLoadingStore} checked={item === state.data.rating} />
             <label htmlFor={`${item}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star" />
               </svg>
             </label>
-          </>
+          </Fragment>
         ))}
       </div>
       <textarea name="comment" onChange={handleChange} className="reviews__textarea form__textarea" id="review" placeholder={placeholder} disabled={isLoadingStore} value={state.data.comment} ></textarea>
